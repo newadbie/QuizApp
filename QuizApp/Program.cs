@@ -1,12 +1,15 @@
 ﻿using System;
+using QuizApp.Views;
 
 namespace QuizApp
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        private static void Main()
         {
-            Console.WriteLine("Hello World!");
+            QuizView quizView = new QuizView();
+            quizView.Greetings();
+            quizView.Menu();
         }
     }
 }
