@@ -1,5 +1,6 @@
 ﻿using System;
 using QuizApp.Models;
+using QuizApp.Exceptions;
 
 namespace QuizApp.Services
 {
@@ -7,15 +8,31 @@ namespace QuizApp.Services
     {
         public void MenuSelect()
         {
-            if (!int.TryParse(Console.ReadLine(), out int opt) 
+            if (!int.TryParse(Console.ReadLine(), out var opt) 
             || Enum.GetName(typeof(EMenuOptions), opt) == null)
             {
-                Console.WriteLine("Error!");
+                throw new IncorrectInputException();
             }
-            else
+
+            EMenuOptions selectedOption = Enum.Parse<EMenuOptions>(Enum.GetName(typeof(EMenuOptions), opt)!);
+            switch (selectedOption)
             {
-                Console.WriteLine("Correct!");
+                case EMenuOptions.ExitQuiz: ExitApplication();
+                    break;
+                case EMenuOptions.NewQuiz: CreateNewQuiz();
+                    break;
             }
+
+        }
+
+        private void CreateNewQuiz()
+        {
+
+        }
+
+        private void ExitApplication()
+        {
+           Environment.Exit(1);
         }
     }
 }
