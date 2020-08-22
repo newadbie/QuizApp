@@ -10,15 +10,16 @@ namespace QuizApp.Models
         private readonly List<Answer> _answers = new List<Answer>();
         private string _title;
 
-        public Question(uint numberOfAnswers)
+        public Question(uint numberOfAnswers, string qTitle)
         {
             _numberOfAnswers = numberOfAnswers;
+            Title = qTitle;
         }
 
         public string Title
         {
             get => _title;
-            set
+            private set
             {
                 if (string.IsNullOrEmpty(value) || string.IsNullOrWhiteSpace(value))
                 {
