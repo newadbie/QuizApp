@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using QuizApp.Exceptions;
 using QuizApp.Models;
 
 namespace QuizApp.Controllers
@@ -23,7 +25,20 @@ namespace QuizApp.Controllers
 
         public Answer CreateAnswer()
         {
-            return new Answer();
+            return new Answer(Console.ReadLine());
+        }
+
+        public List<Answer> SelectCorrectAnswer(List<Answer> answers)
+        {
+            if (!int.TryParse(Console.ReadLine(), out int selectOpt) 
+                || selectOpt - 1 > answers.Count 
+                || selectOpt - 1 < 0)
+            {
+                throw new IncorrectInputException();
+            }
+
+            answers[selectOpt - 1].IsCorrect = true;
+            return answers;
         }
     }
 }

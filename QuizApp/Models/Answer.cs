@@ -20,6 +20,11 @@ namespace QuizApp.Models
             }
         }
 
-        public bool? IsCorrect;
+        public bool IsCorrect = false;
+
+        public Answer(string title)
+        {
+            Title = title;
+        }
     }
 }

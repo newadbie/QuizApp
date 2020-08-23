@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using QuizApp.Controllers;
 using QuizApp.Models;
 
@@ -44,8 +45,29 @@ namespace QuizApp.Views
         {
             Console.WriteLine("Give me a name of your new Question!");
             QuestionController questionController = new QuestionController(quizToAddQuestion, _gameConfiguration);
+
             Question newQuestion = questionController.CreateNewQuestion(Console.ReadLine());
-            Console.WriteLine("ELO");
+            CreateAnswers(newQuestion, questionController);
+        }
+
+        public void CreateAnswers(Question questionToAddAnswer, QuestionController questionController)
+        {
+            List<Answer> tempAnswers = new List<Answer>();
+            for (int i = 0; i < _gameConfiguration.numberOfAnswers; i++)
+            {
+                Console.WriteLine($"Answer number { i + 1 }");
+                Console.WriteLine("Give answer option!");
+                tempAnswers.Add(questionController.CreateAnswer());
+            }
+
+            Console.WriteLine("Which answer is correct?");
+            for (int i = 0; i < tempAnswers.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {tempAnswers[i].Title}");
+            }
+
+            tempAnswers = questionController.SelectCorrectAnswer(tempAnswers);
+            questionToAddAnswer.SetAnswers(tempAnswers);
         }
     }
 }

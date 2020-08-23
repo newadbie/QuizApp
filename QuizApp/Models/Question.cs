@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using QuizApp.Exceptions;
 
 namespace QuizApp.Models
@@ -37,6 +38,24 @@ namespace QuizApp.Models
                 throw new Exception("Incorrect number of answers!");
             }
             return _answers;
+        }
+
+        public void AddAnswer(Answer answer)
+        {
+            _answers.Add(answer);
+        }
+
+        public void SetAnswers(List<Answer> answers)
+        {
+            if (answers.Count != _numberOfAnswers)
+            {
+                throw new Exception("Not enough answers!");
+            }
+
+            if (answers.Select(x => x).Count(x => x.IsCorrect) != 1)
+            {
+                throw new Exception("Must be only one correct answer!");
+            }
         }
     }
 }
