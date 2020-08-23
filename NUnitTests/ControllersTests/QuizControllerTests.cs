@@ -33,5 +33,13 @@ namespace NUnitTests.ControllersTests
         {
             Assert.Throws<ArgumentOutOfRangeException>(() => _quiz.GetQuestions());
         }
+
+        [Test]
+        public void Quiz_GetQuestions_Correct()
+        {
+            Question questionToAdd = new Question(4,"Tytuł");
+            _quiz.AddQuestion(questionToAdd);
+            Assert.DoesNotThrow(() => _quiz.GetQuestions());
+        }
     }
 }
