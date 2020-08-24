@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using QuizApp.Controllers;
+using QuizApp.Exceptions;
 using QuizApp.Models;
 
 namespace QuizApp.Views
@@ -40,7 +41,12 @@ namespace QuizApp.Views
             Console.WriteLine("Give me a name of your new Quiz!");
             Quiz newQuiz = _quizController.CreateNewQuiz(Console.ReadLine());
             Console.Clear();
-            CreateQuestion(newQuiz);
+
+            int numberOfQuestions = AskForNumberOfQuestions();
+            for (int i = 0; i < numberOfQuestions; i++)
+            {
+                CreateQuestion(newQuiz);
+            }
         }
 
         public void CreateQuestion(Quiz quizToAddQuestion)
@@ -73,6 +79,19 @@ namespace QuizApp.Views
             tempAnswers = questionController.SelectCorrectAnswer(tempAnswers);
             questionToAddAnswer.SetAnswers(tempAnswers);
             Console.Clear();
+        }
+
+        private int AskForNumberOfQuestions()
+        {
+            Console.WriteLine("How many questions do you want to ask?");
+            if (!int.TryParse(Console.ReadLine(), out int input)
+                || input > _gameConfiguration.MaxQuestions
+                || input <= 0)
+            {
+                throw new IncorrectInputException();
+            }
+
+            return input;
         }
     }
 }
