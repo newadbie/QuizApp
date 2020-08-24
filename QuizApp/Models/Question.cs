@@ -8,8 +8,8 @@ namespace QuizApp.Models
     public class Question
     {
         private readonly uint _numberOfAnswers;
-        private readonly List<Answer> _answers = new List<Answer>();
         private string _title;
+        private List<Answer> _answers = new List<Answer>();
 
         public Question(uint numberOfAnswers, string qTitle)
         {
@@ -56,6 +56,8 @@ namespace QuizApp.Models
             {
                 throw new Exception("Must be only one correct answer!");
             }
+
+            _answers = answers;
         }
     }
 }

@@ -8,8 +8,12 @@ namespace QuizApp
         private static void Main()
         {
             QuizView quizView = new QuizView();
-            quizView.Greetings();
-            quizView.Menu();
+
+            for (;;)
+            {
+                quizView.Greetings();
+                quizView.Menu();
+            }
         }
     }
 }
