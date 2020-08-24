@@ -1,3 +1,5 @@
 /QuizApp/.vs/*
 /QuizApp/obj/*
 /QuizApp/bin/*
+/NUnitTests/bin/*
+/NUnitTests/obj/*

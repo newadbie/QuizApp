@@ -30,9 +30,14 @@ namespace QuizApp.Controllers
 
         public List<Answer> SelectCorrectAnswer(List<Answer> answers)
         {
+            if (answers.Count != _gameConfiguration.numberOfAnswers)
+            {
+                throw new Exception("Incorrect number of answers!");
+            }
+
             if (!int.TryParse(Console.ReadLine(), out int selectOpt) 
                 || selectOpt - 1 > answers.Count 
-                || selectOpt - 1 < 0)
+                || selectOpt - 1 < 0 )
             {
                 throw new IncorrectInputException();
             }
