@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using QuizApp.Exceptions;
 
 namespace QuizApp.Models
 {
     public class Quiz
     {
+        [Key]
+        public int Id { get; set; }
+
         private string _title;
         private readonly List<Question> _questions = new List<Question>();
 

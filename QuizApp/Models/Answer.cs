@@ -1,9 +1,14 @@
-﻿using QuizApp.Exceptions;
+﻿using System.ComponentModel.DataAnnotations;
+using QuizApp.Exceptions;
 
 namespace QuizApp.Models
 {
     public class Answer
     {
+        [Key]
+        public int Id { get; set; }
+        public int QuestionId { get; set; }
+
         private string _title;
 
         public string Title

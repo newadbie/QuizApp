@@ -5,7 +5,7 @@ namespace QuizApp
 {
     public class Program
     {
-        private static void Main()
+        private static void Main(string[] args)
         {
             QuizView quizView = new QuizView();
 

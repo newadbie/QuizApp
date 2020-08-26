@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using QuizApp.Exceptions;
 
@@ -7,15 +8,13 @@ namespace QuizApp.Models
 {
     public class Question
     {
+        [Key]
+        public int Id { get; set; }
+        public int QuizId { get; set; }
+
         private readonly uint _numberOfAnswers;
         private string _title;
         private List<Answer> _answers = new List<Answer>();
-
-        public Question(uint numberOfAnswers, string qTitle)
-        {
-            _numberOfAnswers = numberOfAnswers;
-            Title = qTitle;
-        }
 
         public string Title
         {
