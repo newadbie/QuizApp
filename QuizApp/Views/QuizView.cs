@@ -15,11 +15,5 @@ namespace QuizApp.Views
         {
             _menu = menu;
         }
-
-        public void Elo()
-        {
-            Console.WriteLine(_menu.GetOptions().Count);
-            Console.WriteLine("Elo");
-        }
     }
 }

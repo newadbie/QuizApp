@@ -28,6 +28,5 @@ namespace QuizApp.Models
         {
             _questions.Add(questionToAdd);
         }
-
     }
 }

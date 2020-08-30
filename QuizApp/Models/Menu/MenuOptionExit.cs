@@ -6,7 +6,8 @@ namespace QuizApp.Models.Menu
     {
         public void Action()
         {
-            Environment.Exit(1);
+            Console.WriteLine("Exit!");
+            //Environment.Exit(1);
         }
     }
 }

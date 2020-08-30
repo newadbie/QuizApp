@@ -8,7 +8,7 @@ namespace QuizApp.Models.Menu
     {
         public void Action()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("New Quiz");
         }
     }
 }

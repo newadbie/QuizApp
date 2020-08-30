@@ -1,41 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using QuizApp.Exceptions;
-using QuizApp.Models;
-using QuizApp.Validators;
-using QuizApp.Views;
+﻿using QuizApp.Models.Menu;
 
 namespace QuizApp.Controllers
 {
     public class ApplicationController
     {
-        private readonly List<Quiz> _quizzes = new List<Quiz>();
-        private readonly QuizView _quizView;
+        private readonly MenuController _menuController;
+        private  IMenuOption _selectedOption;
 
-        public ApplicationController(QuizView quizView)
+        public ApplicationController(MenuController menuController)
         {
-            _quizView = quizView;
+            _menuController = menuController;
         }
 
-        public void Elo()
+        public void StartGame()
         {
-            Console.WriteLine("ELO1");
-            _quizView.Elo();
-        }
-
-        public List<Quiz> GetQuizzes()
-        {
-            if (_quizzes.Count == 0)
-            {
-                throw new ArgumentOutOfRangeException();
-            }
-
-            return _quizzes;
-        }
-
-        public void ExitApplication()
-        {
-            Environment.Exit(1);
+            _selectedOption = _menuController.MenuAction();
+            _selectedOption.Action();
         }
     }
 }

@@ -35,7 +35,7 @@ namespace QuizApp
             using (var scope = Container.BeginLifetimeScope())
             {
                 var controller = scope.Resolve<ApplicationController>();
-                controller.Elo();
+                controller.StartGame();
             }
         }
     }

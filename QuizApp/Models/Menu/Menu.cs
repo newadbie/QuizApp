@@ -6,12 +6,12 @@ namespace QuizApp.Models.Menu
 {
     public class Menu
     {
-        private List<IMenuOption> _options  = new List<IMenuOption>()
+        private readonly Dictionary<string, IMenuOption> _options  = new Dictionary<string,IMenuOption>()
         {
-            new MenuOptionExit(),
-            new MenuOptionNewQuiz()
+            { "Exit", new MenuOptionExit()},
+            { "New quiz", new MenuOptionNewQuiz() }
         };
 
-        public List<IMenuOption> GetOptions() => _options;
+        public Dictionary<string, IMenuOption> GetOptions() => _options;
     }
 }

@@ -4,13 +4,7 @@ namespace QuizApp.Models
 {
     public class GameConfiguration
     {
-        public int MaxQuestions { get; }
-        public int numberOfAnswers { get; }
-
-        public GameConfiguration(int maxQuestions, int maxAnswers)
-        {
-            MaxQuestions = maxQuestions;
-            numberOfAnswers = maxAnswers;
-        }
+        public int MaxQuestions { get; } = 5;
+        public int NumberOfAnswers { get; } = 4;
     }
 }
