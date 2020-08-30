@@ -2,6 +2,7 @@
 using System.Reflection;
 using Autofac;
 using QuizApp.Controllers;
+using QuizApp.Models.Menu;
 using QuizApp.Validators;
 using QuizApp.Views;
 
@@ -34,8 +35,12 @@ namespace QuizApp
         {
             using (var scope = Container.BeginLifetimeScope())
             {
-                var controller = scope.Resolve<ApplicationController>();
-                controller.StartGame();
+                var controller = scope.Resolve<MenuController>();
+                for (;;)
+                {
+                    IMenuOption action = controller.MenuAction();
+                    action.Action();
+                }
             }
         }
     }

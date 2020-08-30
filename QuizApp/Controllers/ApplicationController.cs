@@ -1,21 +1,19 @@
-﻿using QuizApp.Models.Menu;
+﻿using System;
+using System.Collections.Generic;
+using QuizApp.Models;
+using QuizApp.Models.Menu;
 
 namespace QuizApp.Controllers
 {
     public class ApplicationController
     {
-        private readonly MenuController _menuController;
-        private  IMenuOption _selectedOption;
+        private List<Quiz> quizzes { get; set; } = new List<Quiz>();
 
-        public ApplicationController(MenuController menuController)
-        {
-            _menuController = menuController;
-        }
+        public List<Quiz> GetQuizzes() => quizzes;
 
-        public void StartGame()
+        public void AddQuiz(Quiz quizToAdd)
         {
-            _selectedOption = _menuController.MenuAction();
-            _selectedOption.Action();
+            quizzes.Add(quizToAdd);
         }
     }
 }
