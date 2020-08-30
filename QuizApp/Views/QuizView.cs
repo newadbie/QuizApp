@@ -3,95 +3,23 @@ using System.Collections.Generic;
 using QuizApp.Controllers;
 using QuizApp.Exceptions;
 using QuizApp.Models;
+using QuizApp.Models.Menu;
 
 namespace QuizApp.Views
 {
     public class QuizView
     {
-        private readonly QuizController _quizController = new QuizController();
-        private readonly GameConfiguration _gameConfiguration;
+        private readonly Menu _menu;
 
-        public QuizView()
+        public QuizView(Menu menu)
         {
-            _gameConfiguration = new GameConfiguration(4,4);
-        }
-        public void Greetings()
-        {
-            Console.WriteLine("Hello in my quiz application!");
+            _menu = menu;
         }
 
-        public void Menu()
+        public void Elo()
         {
-            Console.WriteLine("1. Create new quiz!");
-            Console.WriteLine("2. Exit game!");
-            EMenuOptions selectedOption = _quizController.SelectOption();
-            Console.Clear();
-            
-            switch (selectedOption)
-            {
-                case EMenuOptions.ExitQuiz: _quizController.ExitApplication();
-                    break;
-                case EMenuOptions.NewQuiz: NewQuiz();
-                    break;
-            }
-        }
-
-        public void NewQuiz()
-        {
-            Console.WriteLine("Give me a name of your new Quiz!");
-            Quiz newQuiz = _quizController.CreateNewQuiz(Console.ReadLine());
-            Console.Clear();
-
-            int numberOfQuestions = AskForNumberOfQuestions();
-            for (int i = 0; i < numberOfQuestions; i++)
-            {
-                CreateQuestion(newQuiz);
-            }
-        }
-
-        public void CreateQuestion(Quiz quizToAddQuestion)
-        {
-            Console.WriteLine("Give me a name of your new Question!");
-            QuestionController questionController = new QuestionController(quizToAddQuestion, _gameConfiguration);
-
-            Question newQuestion = questionController.CreateNewQuestion(Console.ReadLine());
-            Console.Clear();
-            CreateAnswers(newQuestion, questionController);
-        }
-
-        public void CreateAnswers(Question questionToAddAnswer, QuestionController questionController)
-        {
-            List<Answer> tempAnswers = new List<Answer>();
-            for (int i = 0; i < _gameConfiguration.numberOfAnswers; i++)
-            {
-                Console.WriteLine($"Answer number { i + 1 }");
-                Console.WriteLine("Give answer option!");
-                tempAnswers.Add(questionController.CreateAnswer());
-                Console.Clear();
-            }
-
-            Console.WriteLine("Which answer is correct?");
-            for (int i = 0; i < tempAnswers.Count; i++)
-            {
-                Console.WriteLine($"{i + 1}. {tempAnswers[i].Title}");
-            }
-
-            tempAnswers = questionController.SelectCorrectAnswer(tempAnswers);
-            questionToAddAnswer.SetAnswers(tempAnswers);
-            Console.Clear();
-        }
-
-        private int AskForNumberOfQuestions()
-        {
-            Console.WriteLine("How many questions do you want to ask?");
-            if (!int.TryParse(Console.ReadLine(), out int input)
-                || input > _gameConfiguration.MaxQuestions
-                || input <= 0)
-            {
-                throw new IncorrectInputException();
-            }
-
-            return input;
+            Console.WriteLine(_menu.GetOptions().Count);
+            Console.WriteLine("Elo");
         }
     }
 }

@@ -2,32 +2,21 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using QuizApp.Controllers;
 using QuizApp.Exceptions;
 
 namespace QuizApp.Models
 {
-    public class Question
+    public partial class Question
     {
-        [Key]
-        public int Id { get; set; }
-        public int QuizId { get; set; }
-
+        public string Title { get; protected set; }
         private readonly uint _numberOfAnswers;
-        private string _title;
         private List<Answer> _answers = new List<Answer>();
 
-        public string Title
+        protected Question(string title, uint numberOfAnswers)
         {
-            get => _title;
-            private set
-            {
-                if (string.IsNullOrEmpty(value) || string.IsNullOrWhiteSpace(value))
-                {
-                    throw new IncorrectInputException();
-                }
-
-                _title = value;
-            }
+            Title = title;
+            _numberOfAnswers = numberOfAnswers;
         }
 
         public List<Answer> GetAnswers()

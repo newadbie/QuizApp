@@ -1,19 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using QuizApp.Exceptions;
+using QuizApp.Validators;
 
 namespace QuizApp.Models
 {
-    public class Quiz
+    public partial class Quiz
     {
-        [Key]
-        public int Id { get; set; }
-
-        private string _title;
+        public string Title;
         private readonly List<Question> _questions = new List<Question>();
-
-        public Quiz(string title)
+        protected Quiz(string title)
         {
             Title = title;
         }
@@ -33,18 +29,5 @@ namespace QuizApp.Models
             _questions.Add(questionToAdd);
         }
 
-        public string Title
-        {
-            get => _title;
-            set
-            {
-                if (string.IsNullOrWhiteSpace(value) || string.IsNullOrEmpty(value))
-                {
-                    throw new IncorrectInputException();
-                }
-
-                _title = value;
-            }
-        }
     }
 }
