@@ -22,7 +22,7 @@ namespace QuizApp.Controllers
 
         public IMenuOption MenuAction()
         {
-            _menuView.ShowMenu();
+            _menuView.ShowMenu(_menu.GetOptions());
             return SelectOption();
         }
 

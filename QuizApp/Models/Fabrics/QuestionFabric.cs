@@ -6,7 +6,7 @@ namespace QuizApp.Models
 {
     public partial class Question
     {
-        public Question Create(string title)
+        public static Question Create(string title)
         {
             if (!title.IsTitleCorrect())
             {

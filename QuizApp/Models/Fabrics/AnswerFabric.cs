@@ -5,7 +5,7 @@ namespace QuizApp.Models
 {
     public partial class Answer
     {
-        public Answer Create(string title)
+        public static Answer Create(string title)
         {
             if (!title.IsTitleCorrect())
             {

@@ -9,11 +9,6 @@ namespace QuizApp.Views
 {
     public class QuizView
     {
-        private readonly Menu _menu;
 
-        public QuizView(Menu menu)
-        {
-            _menu = menu;
-        }
     }
 }

@@ -7,19 +7,13 @@ namespace QuizApp.Views
 {
     public class MenuView
     {
-        private readonly Menu _menu;
-
-        public MenuView(Menu menu)
-        {
-            _menu = menu;
-        }
-        public void ShowMenu()
+        public void ShowMenu(Dictionary<string, IMenuOption> menuOptions)
         {
             Console.WriteLine("Hello in my quiz application!");
             Console.WriteLine("Select what would you like to do!");
              
             int i = 1;
-            foreach (var option in _menu.GetOptions())
+            foreach (var option in menuOptions)
             {
                 Console.WriteLine($"{i++}. {option.Key}");
             }

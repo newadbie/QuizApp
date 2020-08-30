@@ -1,4 +1,5 @@
 ﻿using System;
+using QuizApp.Views;
 
 namespace QuizApp.Models.Menu
 {
@@ -6,8 +7,7 @@ namespace QuizApp.Models.Menu
     {
         public void Action()
         {
-            Console.WriteLine("Exit!");
-            //Environment.Exit(1);
+            Environment.Exit(1);
         }
     }
 }
