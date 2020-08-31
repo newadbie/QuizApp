@@ -1,37 +1,39 @@
 ﻿using System;
-using QuizApp.Validators;
 using System.Linq;
-using QuizApp.Models;
 using QuizApp.Models.Menu;
+using QuizApp.Validators;
 using QuizApp.Views;
+using QuizApp.Views.Menu;
 
 namespace QuizApp.Controllers
 {
     public class MenuController
     {
-        private readonly MenuView _menuView;
-        private readonly GameConfiguration _gameConfiguration;
         private readonly Menu _menu;
+        private readonly MenuView _menuView;
 
-        public MenuController(MenuView menuView, GameConfiguration gameConfiguration, Menu menu)
+        public MenuController(
+            Menu menu,
+            MenuView menuView)
         {
-            _menuView = menuView;
-            _gameConfiguration = gameConfiguration;
             _menu = menu;
+            _menuView = menuView;
         }
 
-        public IMenuOption MenuAction()
+        public void ShowMenu()
         {
             _menuView.ShowMenu(_menu.GetOptions());
-            return SelectOption();
         }
 
-        private IMenuOption SelectOption()
+        public IMenuOption SelectMenuOption()
         {
             int input = Console.ReadLine().SelectIntParse(_menu.GetOptions().Count);
 
             var menuOptions = _menu.GetOptions().Select(x => x.Value).ToList();
-            return menuOptions[input - 1];
+
+            var selectedOption = menuOptions[input - 1];
+
+            return selectedOption;
         }
     }
 }

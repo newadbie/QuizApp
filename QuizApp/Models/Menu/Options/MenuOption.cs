@@ -1,6 +1,6 @@
 ﻿using QuizApp.Interfaces;
 
-namespace QuizApp.Models.Menu
+namespace QuizApp.Models.Menu.Options
 {
     public abstract  class MenuOption : IMenuOption
     {

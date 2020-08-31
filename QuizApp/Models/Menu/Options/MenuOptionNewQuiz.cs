@@ -3,45 +3,47 @@ using QuizApp.Exceptions;
 using QuizApp.Interfaces;
 using QuizApp.Validators;
 using QuizApp.Views;
-using QuizApp.Views.Interfaces;
 
-namespace QuizApp.Models.Menu
+namespace QuizApp.Models.Menu.Options
 {
     public class MenuOptionNewQuiz : MenuOption
     {
-        private readonly ICreate _createView;
+        private readonly MenuView _menuView;
         private readonly GameConfiguration _gameConfiguration;
         private Quiz _newQuiz;
 
-        public MenuOptionNewQuiz(ICreate createView,
+        public MenuOptionNewQuiz(MenuView menuView,
             GameConfiguration gameConfiguration,
             IApplication applicationController) : base(applicationController)
         {
-            _createView = createView;
+            _menuView = menuView;
             _gameConfiguration = gameConfiguration;
         }
 
         public override void Action()
         {
-            _createView.GiveQuizName();
+            _menuView.GiveQuizName();
             string quizName = Console.ReadLine();
             _newQuiz = Quiz.Create(quizName);
+            Console.Clear();
 
             CreateQuestions();
         }
 
         private void CreateQuestions()
         {
-            _createView.HowManyQuestions();
+            _menuView.HowManyQuestions();
             try
             {
                 int input = Console.ReadLine().ParseInRange(0, _gameConfiguration.MaxQuestions);
+                Console.Clear();
                 for (int i = 0; i < input; i++)
                 {
-                    _createView.AskForQuestion(i + 1);
+                    _menuView.AskForQuestion(i + 1);
                     string questionTitle = Console.ReadLine();
                     var question = Question.Create(questionTitle);
                     _newQuiz.AddQuestion(question);
+                    Console.Clear();
                 }
                 ImplementNewQuizToApplication();
             }

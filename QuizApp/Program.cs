@@ -25,7 +25,9 @@ namespace QuizApp
                 var controller = scope.Resolve<MenuController>();
                 for (;;)
                 {
-                    IMenuOption action = controller.MenuAction();
+                    controller.ShowMenu();
+                    var action = controller.SelectMenuOption();
+                    Console.Clear();
                     action.Action();
                 }
             }

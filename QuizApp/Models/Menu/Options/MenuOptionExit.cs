@@ -3,7 +3,7 @@ using QuizApp.Controllers;
 using QuizApp.Interfaces;
 using QuizApp.Views;
 
-namespace QuizApp.Models.Menu
+namespace QuizApp.Models.Menu.Options
 {
     public class MenuOptionExit : MenuOption
     {
