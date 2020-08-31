@@ -26,11 +26,6 @@ namespace QuizApp.Controllers
             return SelectOption();
         }
 
-        public void AddQuiz(Quiz quizToAdd)
-        {
-            Console.WriteLine("Elo");
-        }
-
         private IMenuOption SelectOption()
         {
             int input = Console.ReadLine().SelectIntParse(_menu.GetOptions().Count);

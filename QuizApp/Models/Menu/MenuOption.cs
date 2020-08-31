@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using QuizApp.Controllers;
+﻿using QuizApp.Interfaces;
 
 namespace QuizApp.Models.Menu
 {
     public abstract  class MenuOption : IMenuOption
     {
-        protected readonly ApplicationController _applicationController;
+        protected readonly IApplication Application;
 
-        protected MenuOption(ApplicationController applicationController)
+        protected MenuOption(IApplication applicationController)
         {
-            _applicationController = applicationController;
+            Application = applicationController;
         }
 
         public abstract void Action();

@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using QuizApp.Controllers;
-using QuizApp.Views;
+﻿using System.Collections.Generic;
+using QuizApp.Interfaces;
+using QuizApp.Views.Interfaces;
 
 namespace QuizApp.Models.Menu
 {
@@ -11,10 +9,12 @@ namespace QuizApp.Models.Menu
         private readonly Dictionary<string, IMenuOption> _options = new Dictionary<string, IMenuOption>();
         public Dictionary<string, IMenuOption> GetOptions() => _options;
 
-        public Menu(CreateView createView, GameConfiguration gameConfiguration, ApplicationController applicationController)
+        public Menu(ICreate createView,
+            GameConfiguration gameConfiguration,
+            IApplication application)
         {
-            _options.Add("Exit", new MenuOptionExit(applicationController));
-            _options.Add("New quiz", new MenuOptionNewQuiz(createView, gameConfiguration, applicationController));
+            _options.Add("Exit", new MenuOptionExit(application));
+            _options.Add("New quiz", new MenuOptionNewQuiz(createView, gameConfiguration, application));
         }
 
     }

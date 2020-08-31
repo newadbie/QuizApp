@@ -9,6 +9,5 @@ namespace QuizApp.Views
 {
     public class QuizView
     {
-
     }
 }

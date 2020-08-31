@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 using QuizApp.Models.Menu;
+using QuizApp.Views.Interfaces;
 
 namespace QuizApp.Views
 {
-    public class MenuView
+    public class MenuView : IMenu
     {
         public void ShowMenu(Dictionary<string, IMenuOption> menuOptions)
         {

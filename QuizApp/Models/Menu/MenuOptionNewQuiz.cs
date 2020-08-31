@@ -1,22 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using QuizApp.Controllers;
 using QuizApp.Exceptions;
+using QuizApp.Interfaces;
 using QuizApp.Validators;
 using QuizApp.Views;
+using QuizApp.Views.Interfaces;
 
 namespace QuizApp.Models.Menu
 {
     public class MenuOptionNewQuiz : MenuOption
     {
-        private readonly CreateView _createView;
+        private readonly ICreate _createView;
         private readonly GameConfiguration _gameConfiguration;
         private Quiz _newQuiz;
 
-        public MenuOptionNewQuiz(CreateView createView,
+        public MenuOptionNewQuiz(ICreate createView,
             GameConfiguration gameConfiguration,
-            ApplicationController applicationController) : base(applicationController)
+            IApplication applicationController) : base(applicationController)
         {
             _createView = createView;
             _gameConfiguration = gameConfiguration;
@@ -55,7 +54,7 @@ namespace QuizApp.Models.Menu
 
         private void ImplementNewQuizToApplication()
         {
-            _applicationController.AddQuiz(_newQuiz);
+            Application.AddQuiz(_newQuiz);
         }
     }
 }

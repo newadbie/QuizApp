@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using QuizApp.Interfaces;
+using QuizApp.Views.Interfaces;
+
 
 namespace QuizApp.Views
 {
-    public class CreateView
+    public class CreateView : ICreate
     {
         public void GiveQuizName()
         {
