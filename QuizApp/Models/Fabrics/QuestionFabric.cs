@@ -1,5 +1,4 @@
 ﻿using System;
-using QuizApp.Exceptions;
 using QuizApp.Validators;
 
 namespace QuizApp.Models

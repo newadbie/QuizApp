@@ -1,8 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using QuizApp.Exceptions;
-using QuizApp.Validators;
-
-namespace QuizApp.Models
+﻿namespace QuizApp.Models
 {
     public partial class Answer
     {

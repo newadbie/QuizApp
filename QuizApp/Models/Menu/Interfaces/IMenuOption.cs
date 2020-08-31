@@ -1,6 +1,4 @@
-﻿using QuizApp.Controllers;
-
-namespace QuizApp.Models.Menu
+﻿namespace QuizApp.Models.Menu.Interfaces
 {
     public interface IMenuOption
     {

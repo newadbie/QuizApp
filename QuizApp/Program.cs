@@ -2,9 +2,6 @@
 using System.Reflection;
 using Autofac;
 using QuizApp.Controllers;
-using QuizApp.Models.Menu;
-using QuizApp.Validators;
-using QuizApp.Views;
 
 namespace QuizApp
 {

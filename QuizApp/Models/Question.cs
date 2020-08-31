@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using QuizApp.Controllers;
-using QuizApp.Exceptions;
+﻿using System.Collections.Generic;
 
 namespace QuizApp.Models
 {

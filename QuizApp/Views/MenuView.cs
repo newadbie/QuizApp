@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using QuizApp.Models.Menu;
+using QuizApp.Models.Menu.Interfaces;
 
 namespace QuizApp.Views
 {

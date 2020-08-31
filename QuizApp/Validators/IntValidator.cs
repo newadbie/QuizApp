@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
-using QuizApp.Exceptions;
+﻿using QuizApp.Exceptions;
 
 namespace QuizApp.Validators
 {

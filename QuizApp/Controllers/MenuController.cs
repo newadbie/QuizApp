@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 using QuizApp.Models.Menu;
+using QuizApp.Models.Menu.Interfaces;
 using QuizApp.Validators;
 using QuizApp.Views;
-using QuizApp.Views.Menu;
 
 namespace QuizApp.Controllers
 {

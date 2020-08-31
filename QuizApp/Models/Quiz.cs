@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using QuizApp.Validators;
 
 namespace QuizApp.Models
 {

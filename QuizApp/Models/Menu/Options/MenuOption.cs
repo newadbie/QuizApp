@@ -1,4 +1,5 @@
 ﻿using QuizApp.Interfaces;
+using QuizApp.Models.Menu.Interfaces;
 
 namespace QuizApp.Models.Menu.Options
 {

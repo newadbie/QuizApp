@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace QuizApp.Models
+﻿namespace QuizApp.Models
 {
     public class GameConfiguration
     {
