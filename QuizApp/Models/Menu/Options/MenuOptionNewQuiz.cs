@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using QuizApp.Exceptions;
 using QuizApp.Interfaces;
 using QuizApp.Validators;
@@ -9,15 +10,12 @@ namespace QuizApp.Models.Menu.Options
     public class MenuOptionNewQuiz : MenuOption
     {
         private readonly MenuView _menuView;
-        private readonly GameConfiguration _gameConfiguration;
         private Quiz _newQuiz;
 
         public MenuOptionNewQuiz(MenuView menuView,
-            GameConfiguration gameConfiguration,
             IApplication applicationController) : base(applicationController)
         {
             _menuView = menuView;
-            _gameConfiguration = gameConfiguration;
         }
 
         public override void Action()
@@ -35,17 +33,22 @@ namespace QuizApp.Models.Menu.Options
             _menuView.HowManyQuestions();
             try
             {
-                int input = Console.ReadLine().ParseInRange(0, _gameConfiguration.MaxQuestions);
+                int maxNumberOfQuestions = Application.GetMaxNumberOfQuestions();
+
+                int input = Console.ReadLine().ParseInRange(0, maxNumberOfQuestions);
                 Console.Clear();
                 for (int i = 0; i < input; i++)
                 {
                     _menuView.AskForQuestion(i + 1);
                     string questionTitle = Console.ReadLine();
                     var question = Question.Create(questionTitle);
+                    Console.Clear();
+                    CreateAnswers(question);
+                    SelectCorrectAnswer(question);
+
                     _newQuiz.AddQuestion(question);
                     Console.Clear();
                 }
-                ImplementNewQuizToApplication();
             }
             catch (IncorrectInputException ex)
             {
@@ -54,9 +57,34 @@ namespace QuizApp.Models.Menu.Options
 
         }
 
-        private void ImplementNewQuizToApplication()
+        private void CreateAnswers(Question currentQuestion)
         {
-            Application.AddQuiz(_newQuiz);
+            int numberOfAnswers = Application.GetNumberOfAnswers();
+            for (int i = 0; i < numberOfAnswers; i++)
+            {
+                Console.Clear();
+               _menuView.AskForAnswer(i + 1);
+               var newAnswer = Answer.Create(Console.ReadLine());
+               currentQuestion.AddAnswer(newAnswer);
+            }
+        }
+
+        private void SelectCorrectAnswer(Question currentQuestion)
+        {
+            Console.Clear();
+            var answers = currentQuestion.GetAnswers();
+            var answersTitle = answers.Select(x => x.Title).ToList();
+            _menuView.ShowAnswers(answersTitle);
+
+            var correctAnswer = Console.ReadLine().SelectIntParse(answersTitle.Count);
+            if (correctAnswer != -1)
+            {
+                answers[correctAnswer - 1].IsCorrect = true;
+            }
+            else
+            {
+                throw new Exception("Incorrect");
+            }
         }
     }
 }

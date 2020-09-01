@@ -13,13 +13,12 @@ namespace QuizApp.Models.Menu
         public Dictionary<string, IMenuOption> GetOptions() => _options;
 
         public Menu(
-            GameConfiguration gameConfiguration,
             IApplication application,
             MenuView menuView
             )
         {
             _options.Add("Exit", new MenuOptionExit(application));
-            _options.Add("New quiz", new MenuOptionNewQuiz(menuView, gameConfiguration, application));
+            _options.Add("New quiz", new MenuOptionNewQuiz(menuView, application));
         }
     }
 }

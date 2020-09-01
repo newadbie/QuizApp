@@ -2,13 +2,13 @@
 {
     public partial class Answer
     {
-        private string _title;
+        public string Title { get; protected set; }
 
         public bool IsCorrect = false;
 
         protected Answer(string title)
         {
-            _title = title;
+            Title = title;
         }
     }
 }
