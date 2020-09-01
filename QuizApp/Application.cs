@@ -8,11 +8,15 @@ namespace QuizApp
     {
         private readonly List<Quiz> _quizzes = new List<Quiz>();
         private readonly GameConfiguration _gameConfiguration;
+        private readonly ApplicationContext _applicationContext;
 
-        public Application(GameConfiguration gameConfiguration)
+        public Application(GameConfiguration gameConfiguration, ApplicationContext applicationContext)
         {
             _gameConfiguration = gameConfiguration;
+            _applicationContext = applicationContext;
         }
+
+        public ApplicationContext GetContext() => _applicationContext;
 
         public List<Quiz> GetQuizzes() => _quizzes;
 
@@ -22,6 +26,8 @@ namespace QuizApp
 
         public void AddQuiz(Quiz quizToAdd)
         {
+            _applicationContext.Add(quizToAdd);
+            _applicationContext.SaveChanges();
             _quizzes.Add(quizToAdd);
         }
 

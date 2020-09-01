@@ -5,6 +5,7 @@ namespace QuizApp.Interfaces
 {
     public interface IApplication
     {
+        ApplicationContext GetContext();
         List<Quiz> GetQuizzes();
         int GetMaxNumberOfQuestions();
         int GetNumberOfAnswers();

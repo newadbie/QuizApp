@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.ComponentModel.DataAnnotations;
 
 namespace QuizApp.Models
 {
     public partial class Question
     {
+        [Key]
+        public int Id { get; set; }
+
         private readonly List<Answer> _answers = new List<Answer>();
         public string Title { get; protected set; }
 

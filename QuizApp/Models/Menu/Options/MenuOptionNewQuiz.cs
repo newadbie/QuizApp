@@ -26,6 +26,7 @@ namespace QuizApp.Models.Menu.Options
             Console.Clear();
 
             CreateQuestions();
+            Application.AddQuiz(_newQuiz);
         }
 
         private void CreateQuestions()
