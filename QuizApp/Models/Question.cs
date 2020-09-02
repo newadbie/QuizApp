@@ -9,7 +9,8 @@ namespace QuizApp.Models
         [Key]
         public int Id { get; set; }
 
-        public List<Answer> Answers { get; private set; } = new List<Answer>();
+        public List<Answer> Answers { get; } = new List<Answer>();
+
         public string Title { get; protected set; }
 
         protected Question(string title)
@@ -23,6 +24,7 @@ namespace QuizApp.Models
         }
 
         public int QuizId { get; set; }
+
         public Quiz Quiz { get; set; }
     }
 }

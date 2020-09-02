@@ -6,6 +6,7 @@ namespace QuizApp.Models
     {
         [Key]
         public int Id { get; set; }
+
         public string Title { get; protected set; }
 
         public bool IsCorrect { get; set; } = false;
@@ -16,6 +17,7 @@ namespace QuizApp.Models
         }
 
         public int QuestionId { get; set; }
+
         public Question Question { get; set; }
     }
 }
