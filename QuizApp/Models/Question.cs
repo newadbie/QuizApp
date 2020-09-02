@@ -9,7 +9,7 @@ namespace QuizApp.Models
         [Key]
         public int Id { get; set; }
 
-        private readonly List<Answer> _answers = new List<Answer>();
+        public List<Answer> Answers { get; private set; } = new List<Answer>();
         public string Title { get; protected set; }
 
         protected Question(string title)
@@ -19,18 +19,11 @@ namespace QuizApp.Models
 
         public void AddAnswer(Answer answerToAdd)
         {
-            _answers.Add(answerToAdd);
+            Answers.Add(answerToAdd);
         }
 
-        public List<Answer> GetAnswers()
-        {
-            if (_answers.Count == 0)
-            {
-                throw new Exception("Not created any answer yet");
-            }
-
-            return _answers;
-        }
+        public int QuizId { get; set; }
+        public Quiz Quiz { get; set; }
     }
 }
 

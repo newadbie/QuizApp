@@ -10,7 +10,7 @@ namespace QuizApp.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source=quizapp.db");
+            optionsBuilder.UseSqlServer(@"Server=.\SQLEXPRESS;Database=ApplicationDB;Trusted_Connection=True;");
         }
     }
 }

@@ -73,7 +73,7 @@ namespace QuizApp.Models.Menu.Options
         private void SelectCorrectAnswer(Question currentQuestion)
         {
             Console.Clear();
-            var answers = currentQuestion.GetAnswers();
+            var answers = currentQuestion.Answers;
             var answersTitle = answers.Select(x => x.Title).ToList();
             _menuView.ShowAnswers(answersTitle);
 
