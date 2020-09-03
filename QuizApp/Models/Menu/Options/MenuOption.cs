@@ -1,15 +1,16 @@
-﻿using QuizApp.Interfaces;
+﻿using QuizApp.Controllers;
+using QuizApp.Interfaces;
 using QuizApp.Models.Menu.Interfaces;
 
 namespace QuizApp.Models.Menu.Options
 {
     public abstract  class MenuOption : IMenuOption
     {
-        protected readonly IApplication Application;
+        protected readonly Menu _menu;
 
-        protected MenuOption(IApplication applicationController)
+        protected MenuOption(Menu menu)
         {
-            Application = applicationController;
+            _menu = menu;
         }
 
         public abstract void Action();

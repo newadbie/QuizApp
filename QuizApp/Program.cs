@@ -1,7 +1,6 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
 using Autofac;
-using QuizApp.Controllers;
+using QuizApp.Models.Menu;
 
 namespace QuizApp
 {
@@ -12,21 +11,18 @@ namespace QuizApp
         private static void Main(string[] args)
         {
             Build();
-            ShowMenu();
+            StartApplication();
         }
 
-        public static void ShowMenu()
+        private static void StartApplication()
         {
             using (var scope = Container.BeginLifetimeScope())
             {
-                var controller = scope.Resolve<MenuController>();
-                for (;;)
-                {
-                    controller.ShowMenu();
-                    var action = controller.SelectMenuOption();
-                    Console.Clear();
-                    action.Action();
-                }
+                var menu = scope.Resolve<Menu>();
+                menu.ShowMenu();
+                var menuAction = menu.SelectMenuOption();
+
+                menuAction.Action();
             }
         }
 

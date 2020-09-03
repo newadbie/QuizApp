@@ -1,5 +1,5 @@
 ﻿using System;
-using QuizApp.Interfaces;
+using QuizApp.Controllers;
 
 namespace QuizApp.Models.Menu.Options
 {
@@ -10,7 +10,7 @@ namespace QuizApp.Models.Menu.Options
             Environment.Exit(1);
         }
 
-        public MenuOptionExit(IApplication application) : base(application)
+        public MenuOptionExit(Menu menu) : base(menu)
         {
         }
     }
