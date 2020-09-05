@@ -1,4 +1,6 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
+using System.Threading.Tasks;
 using Autofac;
 using QuizApp.Models.Menu;
 
@@ -16,13 +18,14 @@ namespace QuizApp
 
         private static void StartApplication()
         {
-            using (var scope = Container.BeginLifetimeScope())
+            using var scope = Container.BeginLifetimeScope();
+            var menu = scope.Resolve<Menu>();
+            for (;;)
             {
-                var menu = scope.Resolve<Menu>();
                 menu.ShowMenu();
                 var menuAction = menu.SelectMenuOption();
-
-                menuAction.Action();
+                Console.Clear();
+                menuAction.Action(); 
             }
         }
 
@@ -36,6 +39,8 @@ namespace QuizApp
                 .AsImplementedInterfaces();
 
             Container = builder.Build();
+
+
         }
     }
 }

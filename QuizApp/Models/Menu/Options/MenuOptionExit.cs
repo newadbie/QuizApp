@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using QuizApp.Controllers;
 
 namespace QuizApp.Models.Menu.Options
@@ -7,7 +8,7 @@ namespace QuizApp.Models.Menu.Options
     {
         public override void Action()
         {
-            Environment.Exit(1);
+            _menu.ExitApplication();
         }
 
         public MenuOptionExit(Menu menu) : base(menu)

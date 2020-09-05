@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using QuizApp.Controllers;
 using QuizApp.Exceptions;
 using QuizApp.Interfaces;
@@ -15,7 +16,7 @@ namespace QuizApp.Models.Menu.Options
         }
 
         public override void Action()
-        {
+        { 
             _menu.CreateNewQuiz();
         }
     }

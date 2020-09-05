@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using QuizApp.Exceptions;
+using QuizApp.Interfaces;
 using QuizApp.Models.Menu.Interfaces;
 using QuizApp.Models.Menu.Options;
+using QuizApp.Services;
 using QuizApp.Validators;
 using QuizApp.Views;
 
@@ -14,16 +17,22 @@ namespace QuizApp.Models.Menu
         private readonly MenuView _menuView;
         private readonly GameConfiguration _gameConfiguration;
         private readonly Dictionary<string, IMenuOption> _options = new Dictionary<string, IMenuOption>();
+        private readonly IDatabase _db;
+        private readonly TasksService _tasksService;
 
         public Dictionary<string, IMenuOption> GetOptions() => _options;
 
         public Menu(
             MenuView menuView,
-            GameConfiguration gameConfiguration
+            GameConfiguration gameConfiguration,
+            IDatabase db,
+            TasksService tasksService
             )
         {
+            _tasksService = tasksService;
             _gameConfiguration = gameConfiguration;
             _menuView = menuView;
+            _db = db;
 
             _options.Add("Exit", new MenuOptionExit(this));
             _options.Add("New quiz", new MenuOptionNewQuiz(this));
@@ -43,6 +52,21 @@ namespace QuizApp.Models.Menu
             Console.Clear();
 
             CreateQuestions(newQuiz);
+
+            _tasksService.AddTask(_db.SaveQuiz(newQuiz));
+        }
+
+        public void ExitApplication()
+        {
+            try
+            {
+                Task.WaitAll(_tasksService.GetTasks().ToArray());
+                Environment.Exit(1);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
 
         private void CreateQuestions(Quiz newQuiz)

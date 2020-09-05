@@ -8,7 +8,6 @@ namespace QuizApp.Validators
         {
             if (string.IsNullOrEmpty(title) || string.IsNullOrWhiteSpace(title))
             {
-                Console.WriteLine("SDAD");
                 return false;
             }
 

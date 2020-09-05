@@ -1,4 +1,6 @@
-﻿namespace QuizApp.Models.Menu.Interfaces
+﻿using System.Threading.Tasks;
+
+namespace QuizApp.Models.Menu.Interfaces
 {
     public interface IMenuOption
     {
