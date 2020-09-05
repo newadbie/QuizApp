@@ -3,6 +3,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Autofac;
 using QuizApp.Models.Menu;
+using QuizApp.Models.Menu.Interfaces;
 using QuizApp.Services;
 
 namespace QuizApp
@@ -19,12 +20,12 @@ namespace QuizApp
 
         private static void StartApplication()
         {
-            using var scope = Container.BeginLifetimeScope();
-            var menu = scope.Resolve<Menu>();
+            using ILifetimeScope scope = Container.BeginLifetimeScope();
+            Menu menu = scope.Resolve<Menu>();
             for (;;)
             {
                 menu.ShowMenu();
-                var menuAction = menu.SelectMenuOption();
+                IMenuOption menuAction = menu.SelectMenuOption();
                 Console.Clear();
                 menuAction?.Action(); 
             }
@@ -32,7 +33,7 @@ namespace QuizApp
 
         private static void Build()
         {
-            var builder = new ContainerBuilder();
+            ContainerBuilder builder = new ContainerBuilder();
             Assembly executingAssembly = Assembly.GetExecutingAssembly();
 
             builder.RegisterAssemblyTypes(executingAssembly)
