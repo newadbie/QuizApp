@@ -48,7 +48,7 @@ namespace QuizApp.Models.Menu
         {
             _menuView.GiveQuizName();
             string quizName = Console.ReadLine();
-            var newQuiz = Quiz.Create(quizName);
+            Quiz newQuiz = Quiz.Create(quizName);
             Console.Clear();
 
             CreateQuestions(newQuiz);
@@ -88,7 +88,7 @@ namespace QuizApp.Models.Menu
             {
                 _menuView.AskForQuestion(i + 1);
                 string questionTitle = Console.ReadLine();
-                var question = Question.Create(questionTitle);
+                Question question = Question.Create(questionTitle);
                 Console.Clear();
                 CreateAnswers(question);
                 SelectCorrectAnswer(question);
@@ -105,7 +105,7 @@ namespace QuizApp.Models.Menu
             {
                 Console.Clear();
                 _menuView.AskForAnswer(i + 1);
-                var newAnswer = Answer.Create(Console.ReadLine());
+                Answer newAnswer = Answer.Create(Console.ReadLine());
                 currentQuestion.AddAnswer(newAnswer);
             }
         }
@@ -113,8 +113,8 @@ namespace QuizApp.Models.Menu
         private void SelectCorrectAnswer(Question currentQuestion)
         {
             Console.Clear();
-            var answers = currentQuestion.Answers;
-            var answersTitle = answers.Select(x => x.Title).ToList();
+            List<Answer> answers = currentQuestion.Answers;
+            List<string> answersTitle = answers.Select(x => x.Title).ToList();
             _menuView.ShowAnswers(answersTitle);
 
             if (Console.ReadLine().SelectIntParse(answersTitle.Count, out int input))
@@ -136,9 +136,9 @@ namespace QuizApp.Models.Menu
                 return null;
             }
 
-            var menuOptions = GetOptions().Select(x => x.Value).ToList();
+            List<IMenuOption> menuOptions = GetOptions().Select(x => x.Value).ToList();
 
-            var selectedOption = menuOptions[input - 1];
+            IMenuOption selectedOption = menuOptions[input - 1];
 
             return selectedOption;
         }

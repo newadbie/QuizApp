@@ -10,7 +10,7 @@ namespace QuizApp.Controllers
     {
         public async Task SaveQuiz(Quiz quizToSave)
         {
-            await using var applicationContext = new ApplicationContext();
+            await using ApplicationContext applicationContext = new ApplicationContext();
             applicationContext.Add(quizToSave);
             await applicationContext.SaveChangesAsync();
             await applicationContext.DisposeAsync();

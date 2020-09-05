@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using QuizApp.Models;
 using QuizApp.Models.Menu.Interfaces;
 
@@ -13,9 +14,9 @@ namespace QuizApp.Views
             Console.WriteLine("Select what would you like to do!");
              
             int i = 1;
-            foreach (var option in menuOptions)
+            foreach (IMenuOption option in menuOptions.Select(x => x.Value))
             {
-                Console.WriteLine($"{i++}. {option.Key}");
+                Console.WriteLine($"{i++}. {option}");
             }
 
             Console.WriteLine("Make your choice!");
