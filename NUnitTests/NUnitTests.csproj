@@ -16,4 +16,8 @@
     <ProjectReference Include="..\QuizApp\QuizApp.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ControllersTests\" />
+  </ItemGroup>
+
 </Project>

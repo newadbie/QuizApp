@@ -1,30 +1,23 @@
-﻿using QuizApp.Exceptions;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace QuizApp.Models
 {
-    public class Answer
+    public partial class Answer
     {
-        private string _title;
+        [Key]
+        public int Id { get; set; }
 
-        public string Title
-        {
-            get => _title;
-            set
-            {
-                if (string.IsNullOrEmpty(value) || string.IsNullOrWhiteSpace(value))
-                {
-                    throw new IncorrectInputException();
-                }
+        public string Title { get; protected set; }
 
-                _title = value;
-            }
-        }
+        public bool IsCorrect { get; set; } = false;
 
-        public bool IsCorrect = false;
-
-        public Answer(string title)
+        protected Answer(string title)
         {
             Title = title;
         }
+
+        public int QuestionId { get; set; }
+
+        public Question Question { get; set; }
     }
 }

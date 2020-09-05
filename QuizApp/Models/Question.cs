@@ -1,61 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using QuizApp.Exceptions;
+using System.ComponentModel.DataAnnotations;
 
 namespace QuizApp.Models
 {
-    public class Question
+    public partial class Question
     {
-        private readonly uint _numberOfAnswers;
-        private readonly List<Answer> _answers = new List<Answer>();
-        private string _title;
+        [Key]
+        public int Id { get; set; }
 
-        public Question(uint numberOfAnswers, string qTitle)
+        public List<Answer> Answers { get; } = new List<Answer>();
+
+        public string Title { get; protected set; }
+
+        protected Question(string title)
         {
-            _numberOfAnswers = numberOfAnswers;
-            Title = qTitle;
+            Title = title;
         }
 
-        public string Title
+        public void AddAnswer(Answer answerToAdd)
         {
-            get => _title;
-            private set
-            {
-                if (string.IsNullOrEmpty(value) || string.IsNullOrWhiteSpace(value))
-                {
-                    throw new IncorrectInputException();
-                }
-
-                _title = value;
-            }
+            Answers.Add(answerToAdd);
         }
 
-        public List<Answer> GetAnswers()
-        {
-            if (_answers.Count != _numberOfAnswers)
-            {
-                throw new Exception("Incorrect number of answers!");
-            }
-            return _answers;
-        }
+        public int QuizId { get; set; }
 
-        public void AddAnswer(Answer answer)
-        {
-            _answers.Add(answer);
-        }
-
-        public void SetAnswers(List<Answer> answers)
-        {
-            if (answers.Count != _numberOfAnswers)
-            {
-                throw new Exception("Not enough answers!");
-            }
-
-            if (answers.Select(x => x).Count(x => x.IsCorrect) != 1)
-            {
-                throw new Exception("Must be only one correct answer!");
-            }
-        }
+        public Quiz Quiz { get; set; }
     }
 }
+

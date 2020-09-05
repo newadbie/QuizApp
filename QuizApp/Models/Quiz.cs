@@ -1,46 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
-using QuizApp.Exceptions;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace QuizApp.Models
 {
-    public class Quiz
+    public partial class Quiz
     {
-        private string _title;
-        private readonly List<Question> _questions = new List<Question>();
+        [Key]
+        public int Id { get; set; }
 
-        public Quiz(string title)
+        public string Title { get; protected set; }
+
+        protected Quiz(string title)
         {
             Title = title;
         }
 
-        public List<Question> GetQuestions()
-        {
-            if (_questions.Count == 0)
-            {
-                throw new ArgumentOutOfRangeException();
-            }
-
-            return _questions;
-        }
-
         public void AddQuestion(Question questionToAdd)
         {
-            _questions.Add(questionToAdd);
+            Questions.Add(questionToAdd);
         }
 
-        public string Title
-        {
-            get => _title;
-            set
-            {
-                if (string.IsNullOrWhiteSpace(value) || string.IsNullOrEmpty(value))
-                {
-                    throw new IncorrectInputException();
-                }
+        public bool HasQuestions() => Questions.Count != 0;
 
-                _title = value;
-            }
-        }
+        public List<Question> Questions { get; } = new List<Question>();
     }
 }
