@@ -3,6 +3,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Autofac;
 using QuizApp.Models.Menu;
+using QuizApp.Services;
 
 namespace QuizApp
 {
@@ -25,7 +26,7 @@ namespace QuizApp
                 menu.ShowMenu();
                 var menuAction = menu.SelectMenuOption();
                 Console.Clear();
-                menuAction.Action(); 
+                menuAction?.Action(); 
             }
         }
 
@@ -39,8 +40,6 @@ namespace QuizApp
                 .AsImplementedInterfaces();
 
             Container = builder.Build();
-
-
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace QuizApp.Models
 {
@@ -20,6 +21,8 @@ namespace QuizApp.Models
         {
             Questions.Add(questionToAdd);
         }
+
+        public bool HasQuestions() => Questions.Count != 0;
 
         public List<Question> Questions { get; } = new List<Question>();
     }

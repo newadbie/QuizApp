@@ -53,7 +53,10 @@ namespace QuizApp.Models.Menu
 
             CreateQuestions(newQuiz);
 
-            _tasksService.AddTask(_db.SaveQuiz(newQuiz));
+            if (newQuiz.HasQuestions())
+            {
+                _tasksService.AddTask(_db.SaveQuiz(newQuiz));
+            }
         }
 
         public void ExitApplication()
@@ -72,28 +75,26 @@ namespace QuizApp.Models.Menu
         private void CreateQuestions(Quiz newQuiz)
         {
             _menuView.HowManyQuestions();
-            try
+            int maxNumberOfQuestions = _gameConfiguration.MaxQuestions;
+
+            if (!Console.ReadLine()
+                .ParseInRange(0, maxNumberOfQuestions, out int input))
             {
-                int maxNumberOfQuestions = _gameConfiguration.MaxQuestions;
-
-                int input = Console.ReadLine().ParseInRange(0, maxNumberOfQuestions);
-                Console.Clear();
-                for (int i = 0; i < input; i++)
-                {
-                    _menuView.AskForQuestion(i + 1);
-                    string questionTitle = Console.ReadLine();
-                    var question = Question.Create(questionTitle);
-                    Console.Clear();
-                    CreateAnswers(question);
-                    SelectCorrectAnswer(question);
-
-                    newQuiz.AddQuestion(question);
-                    Console.Clear();
-                }
+                Console.WriteLine("Incorrect input!");
+                return;
             }
-            catch (IncorrectInputException ex)
+            Console.Clear();
+            for (int i = 0; i < input; i++)
             {
-                Console.WriteLine(ex.Message);
+                _menuView.AskForQuestion(i + 1);
+                string questionTitle = Console.ReadLine();
+                var question = Question.Create(questionTitle);
+                Console.Clear();
+                CreateAnswers(question);
+                SelectCorrectAnswer(question);
+
+                newQuiz.AddQuestion(question);
+                Console.Clear();
             }
         }
 
@@ -116,20 +117,24 @@ namespace QuizApp.Models.Menu
             var answersTitle = answers.Select(x => x.Title).ToList();
             _menuView.ShowAnswers(answersTitle);
 
-            var correctAnswer = Console.ReadLine().SelectIntParse(answersTitle.Count);
-            if (correctAnswer != -1)
+            if (Console.ReadLine().SelectIntParse(answersTitle.Count, out int input))
             {
-                answers[correctAnswer - 1].IsCorrect = true;
+                answers[input - 1].IsCorrect = true;
             }
             else
             {
-                throw new Exception("Incorrect");
+                Console.WriteLine("Incorrect input");
             }
+
         }
 
         public IMenuOption SelectMenuOption()
         {
-            int input = Console.ReadLine().SelectIntParse(GetOptions().Count);
+            if (!Console.ReadLine().SelectIntParse(GetOptions().Count, out int input))
+            {
+                Console.WriteLine("Incorrect input!");
+                return null;
+            }
 
             var menuOptions = GetOptions().Select(x => x.Value).ToList();
 
