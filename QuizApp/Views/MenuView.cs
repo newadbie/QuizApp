@@ -2,21 +2,24 @@
 using System.Collections.Generic;
 using System.Linq;
 using QuizApp.Models;
+using QuizApp.Models.Menu;
 using QuizApp.Models.Menu.Interfaces;
 
 namespace QuizApp.Views
 {
     public class MenuView
     {
-        public void ShowMenu(Dictionary<string, IMenuOption> menuOptions)
+        public void ShowMenu(Menu menu)
         {
-            Console.WriteLine("Hello in my quiz application!");
-            Console.WriteLine("Select what would you like to do!");
+            foreach (string header in menu.Headers)
+            {
+                Console.WriteLine($"{header}");
+            }
              
             int i = 1;
-            foreach (IMenuOption option in menuOptions.Select(x => x.Value))
+            foreach (IMenuOption option in menu.Options)
             {
-                Console.WriteLine($"{i++}. {option}");
+                Console.WriteLine($"{i++}. {option.Text}");
             }
 
             Console.WriteLine("Make your choice!");
