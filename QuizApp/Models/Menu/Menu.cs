@@ -1,20 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using QuizApp.Interfaces;
+using QuizApp.Models.Builders;
 using QuizApp.Models.Menu.Interfaces;
 using QuizApp.Models.Menu.Options;
 using QuizApp.Validators;
-using QuizApp.Views;
 
 namespace QuizApp.Models.Menu
 {
     public class Menu : IMenu
     {
-        private readonly MenuView _menuView;
         private readonly GameConfiguration _gameConfiguration;
         private readonly IDatabase _db;
         private readonly ITasksService _tasksService;
+        private readonly QuestionBuilder _questionBuilder;
+
         public List<IMenuOption> Options { get; } = new List<IMenuOption>();
 
 
@@ -22,15 +22,16 @@ namespace QuizApp.Models.Menu
         public List<string> Headers { get; } = new List<string>() { "Hello in my quiz application!", "Select what would you like to do!"};
 
         public Menu(
-            MenuView menuView,
             GameConfiguration gameConfiguration,
-            IDatabase db
+            IDatabase db,
+            QuestionBuilder questionBuilder,
+            ITasksService tasksService
             )
         {
             _gameConfiguration = gameConfiguration;
-            _menuView = menuView;
             _db = db;
-            _tasksService = SingletonTasksService.GetTasksService();
+            _tasksService = tasksService;
+            _questionBuilder = questionBuilder;
 
             AddMenuOptions();
         }
@@ -44,29 +45,33 @@ namespace QuizApp.Models.Menu
 
         private void CreateNewQuiz()
         {
-            _menuView.GiveQuizName();
+            Console.WriteLine("Give title for your new quiz!");
             string quizName = Console.ReadLine();
-            Quiz newQuiz = Quiz.Create(quizName);
-            Console.Clear();
+            TitleValidator titleValidator = new TitleValidator();
 
-            newQuiz = Question.CreateQuestions(newQuiz, _menuView, _gameConfiguration);
-
-            if (newQuiz.HasQuestions())
+            while (true)
             {
-                _tasksService.AddTask(_db.SaveQuiz(newQuiz));
+                if (titleValidator.Validate(quizName))
+                {
+                    Quiz newQuiz = new Quiz(quizName);
+                    Console.Clear();
+
+                    _questionBuilder.CreateQuestions(newQuiz);
+
+                    if (newQuiz.HasQuestions())
+                    {
+                        _tasksService.AddTask(_db.SaveQuiz(newQuiz));
+                    }
+
+                    break;
+                }
             }
         }
 
-        public IMenuOption SelectMenuOption()
+        public IMenuOption SelectMenuOption(int selection)
         {
-            if (!Console.ReadLine().SelectIntParse(Options.Count, out int input))
-            {
-                Console.WriteLine("Incorrect input!");
-                return null;
-            }
-
-            IMenuOption selectedOption = Options[input - 1];
-            return selectedOption;
+            if (selection < 1 || selection > Options.Count) return null;
+            return Options[selection - 1];
         }
 
         private void ExitApplication()

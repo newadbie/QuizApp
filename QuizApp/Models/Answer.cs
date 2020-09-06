@@ -2,7 +2,7 @@
 
 namespace QuizApp.Models
 {
-    public partial class Answer
+    public class Answer
     {
         [Key]
         public int Id { get; set; }
@@ -11,7 +11,7 @@ namespace QuizApp.Models
 
         public bool IsCorrect { get; set; } = false;
 
-        protected Answer(string title)
+        public Answer(string title)
         {
             Title = title;
         }

@@ -5,14 +5,14 @@ using System.Linq;
 
 namespace QuizApp.Models
 {
-    public partial class Quiz
+    public class Quiz
     {
         [Key]
         public int Id { get; set; }
 
         public string Title { get; protected set; }
 
-        protected Quiz(string title)
+        public Quiz(string title)
         {
             Title = title;
         }

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace QuizApp.Models
 {
-    public partial class Question
+    public class Question
     {
         [Key]
         public int Id { get; set; }
@@ -13,7 +13,7 @@ namespace QuizApp.Models
 
         public string Title { get; protected set; }
 
-        protected Question(string title)
+        public Question(string title)
         {
             Title = title;
         }
