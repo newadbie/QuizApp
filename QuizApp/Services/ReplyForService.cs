@@ -31,20 +31,16 @@ namespace QuizApp.Services
 
         public void SelectQuiz()
         {
-            while (true)
+            if (_quizzes == null)
             {
-                if (_quizzes != null)
-                {
-                    QuizPage quizPage = new QuizPage(_quizzes);
-                    _menuView.ShowQuizzes(_quizzes.Select(x => x.Title).ToList());
-                    break;
-                }
-                Console.Clear();
-                Console.WriteLine("Loading data...");
                 LoadQuizzes();
             }
 
-            Console.ReadLine();
+            QuizPage quizPage = new QuizPage(_quizzes);
+            var e = quizPage.SelectItem();
+
+            Console.WriteLine(e.Title);
+
         }
     }
 }

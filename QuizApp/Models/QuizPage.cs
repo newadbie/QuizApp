@@ -11,17 +11,26 @@ namespace QuizApp.Models
         {
         }
 
-        public override void ShowPage()
-        {
-            int pagesToSkip = (CurrentPage - 1) * 7;
-            var quizzesToShow = ItemsInList.Select(x => x)
-                .Skip(pagesToSkip)
-                .Take(PagesOnPage);
+        public override int ItemsOnPage { get; } = 7;
 
+        public override void MenuPage()
+        {
             int i = 1;
-            foreach (var item in quizzesToShow)
+            foreach (var item in ItemsAtPage())
             {
                 Console.WriteLine($"[{i++}]. {item.Title}");
+            }
+
+            Console.WriteLine();
+            Console.WriteLine();
+            if (!IsLastPage())
+            {
+                Console.WriteLine($"[{i++}]. Next page!");
+            }
+
+            if (!IsFirstPage())
+            {
+                Console.WriteLine($"[{i++}]. Previous page!");
             }
         }
     }

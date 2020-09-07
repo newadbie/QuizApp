@@ -6,12 +6,15 @@ namespace QuizApp.Interfaces
     {
         int Pages { get; }
         int CurrentPage { get; }
-        int PagesOnPage { get; }
-        List<T> ItemsInList { get; }
+        int ItemsOnPage { get; }
 
-        void LastPage();
+        List<T> ItemsInList { get; }
+        List<T> ItemsAtPage();
+
+        void PreviousPage();
         void NextPage();
-        void ShowPage();
+        void MenuPage();
+        T SelectItem();
         int ItemsInCurrentPage();
         bool IsLastPage();
         bool IsFirstPage();

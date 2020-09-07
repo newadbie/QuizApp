@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using QuizApp.Validators;
 
 namespace QuizApp.Interfaces
 {
@@ -7,7 +9,7 @@ namespace QuizApp.Interfaces
     {
         public int Pages { get; }
         public int CurrentPage { get; private set; } = 1;
-        public virtual int PagesOnPage { get; } = 7;
+        public abstract int ItemsOnPage { get; }
         public List<T> ItemsInList { get; }
 
         protected Page(List<T> itemsToList)
@@ -16,9 +18,18 @@ namespace QuizApp.Interfaces
             Pages = (int)Math.Ceiling((double) ItemsInList.Count / 7);
         }
 
-        public void LastPage()
+        public List<T> ItemsAtPage()
         {
-            if (CurrentPage - 1 > 0)
+            int pagesToSkip = (CurrentPage - 1) * ItemsOnPage;
+
+            return ItemsInList.Select(x => x)
+                .Skip(pagesToSkip)
+                .Take(ItemsOnPage).ToList();
+        }
+
+        public void PreviousPage()
+        {
+            if (!IsFirstPage())
             {
                 CurrentPage--;
             }
@@ -26,9 +37,46 @@ namespace QuizApp.Interfaces
 
         public void NextPage()
         {
-            if (CurrentPage + 1 < Pages)
+            if (!IsLastPage())
             {
                 CurrentPage++;
+            }
+        }
+
+        public T SelectItem()
+        {
+            int firstFreeIndex;
+            int nextPageIndex;
+            int previousPageIndex;
+
+            while (true)
+            {
+                firstFreeIndex = ItemsAtPage().Count;
+                nextPageIndex = IsLastPage() ? -1 : firstFreeIndex++;
+                previousPageIndex = IsFirstPage() ? -1 : firstFreeIndex++; 
+                Console.Clear();
+                MenuPage();
+                if (ConsoleEx.TryReadInt(out int input))
+                {
+                    if (input >= 1 && input < firstFreeIndex)
+                    {
+                        int itemIndex = input + ((CurrentPage - 1) * ItemsOnPage) - 1;
+                        return ItemsInList[itemIndex];
+                    }
+                    if (input - 1 == nextPageIndex && !IsLastPage())
+                    {
+                        NextPage();
+                        continue;;
+                    }
+                    if (input - 1 == previousPageIndex && !IsFirstPage())
+                    {
+                        PreviousPage();
+                        continue;
+                    }
+                }
+                Console.Clear();
+                Console.WriteLine("Incorrect input!");
+                Console.ReadLine();
             }
         }
 
@@ -45,6 +93,6 @@ namespace QuizApp.Interfaces
         public bool IsLastPage() => CurrentPage == Pages;
         public bool IsFirstPage() => CurrentPage == 1;
 
-        public abstract void ShowPage();
+        public abstract void MenuPage();
     }
 }
