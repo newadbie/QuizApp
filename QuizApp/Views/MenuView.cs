@@ -4,6 +4,7 @@ using System.Linq;
 using QuizApp.Models;
 using QuizApp.Models.Menu;
 using QuizApp.Models.Menu.Interfaces;
+using QuizApp.Validators;
 
 namespace QuizApp.Views
 {
@@ -32,6 +33,13 @@ namespace QuizApp.Views
             {
                 Console.WriteLine($"{i + 1}. {answersTitle[i]}");
             }
+
+        }
+
+        public void ShowQuizzes(List<string> quizzesToShow)
+        {
+            int Pages = (int)Math.Ceiling((double) quizzesToShow.Count / 7);
+            int currentPage = 1;
 
         }
     }

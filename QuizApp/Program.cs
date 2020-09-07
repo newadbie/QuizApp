@@ -24,9 +24,9 @@ namespace QuizApp
             StartApplication();
         }
 
-        private static void StartApplication()
+        private static async void StartApplication()
         {
-            using ILifetimeScope scope = Container.BeginLifetimeScope();
+            await using ILifetimeScope scope = Container.BeginLifetimeScope();
 
             var menu = scope.Resolve<Menu>();
             var menuView = new MenuView();
@@ -69,6 +69,7 @@ namespace QuizApp
             builder.RegisterType<MenuView>().InstancePerDependency();
             builder.RegisterType<QuestionBuilder>().InstancePerDependency();
             builder.RegisterType<TasksService>().As<ITasksService>().SingleInstance();
+            builder.RegisterType<ReplyForService>().InstancePerDependency();
 
             Container = builder.Build();
         }

@@ -8,7 +8,7 @@ namespace QuizApp.Interfaces
     {
         Task SaveQuiz(Quiz quizToSave);
 
-        List<Quiz> GetQuizzes();
+        Task<List<Quiz>> GetQuizzes();
 
         Task LoadQuizzes();
     }
