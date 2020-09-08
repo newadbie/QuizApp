@@ -23,6 +23,7 @@ namespace QuizApp.Models
 
             Console.WriteLine();
             Console.WriteLine();
+
             if (!IsLastPage())
             {
                 Console.WriteLine($"[{i++}]. Next page!");

@@ -65,6 +65,7 @@ namespace QuizApp.Models.Menu
                     if (newQuiz.HasQuestions())
                     {
                         _tasksService.AddTask(_db.SaveQuiz(newQuiz));
+                        _tasksService.AddTask(_replyForService.LoadQuizzes());
                     }
 
                     break;

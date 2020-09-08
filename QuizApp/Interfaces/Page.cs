@@ -58,11 +58,12 @@ namespace QuizApp.Interfaces
                 MenuPage();
                 if (ConsoleEx.TryReadInt(out int input))
                 {
-                    if (input >= 1 && input < firstFreeIndex)
+                    if (input >= 1 && input < ItemsInCurrentPage())
                     {
                         int itemIndex = input + ((CurrentPage - 1) * ItemsOnPage) - 1;
                         return ItemsInList[itemIndex];
                     }
+
                     if (input - 1 == nextPageIndex && !IsLastPage())
                     {
                         NextPage();
@@ -82,12 +83,7 @@ namespace QuizApp.Interfaces
 
         public int ItemsInCurrentPage()
         {
-            if (CurrentPage != Pages)
-            {
-                return 7;
-            }
-         
-            return ItemsInList.Count % 7;
+            return (ItemsInList.Count % 7) + 1 ;
         }
 
         public bool IsLastPage() => CurrentPage == Pages;

@@ -11,6 +11,8 @@ namespace QuizApp.Services
         public void AddTask(Task taskToAdd)
         {
             Tasks.Add(taskToAdd);
+            taskToAdd.Wait();
+            Tasks.Remove(taskToAdd);
         }
     }
 }
