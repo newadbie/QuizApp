@@ -3,3 +3,5 @@
 /QuizApp/bin/*
 /NUnitTests/bin/*
 /NUnitTests/obj/*
+/QuizAPI/bin/*
+/QuizAPI/obj/*

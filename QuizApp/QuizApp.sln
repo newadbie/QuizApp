@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuizApp", "QuizApp.csproj", "{B67BECC3-CBC2-4028-B250-90E4244056FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NUnitTests", "..\NUnitTests\NUnitTests.csproj", "{75E86381-490D-4E29-9DB8-2A70DACCABFD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NUnitTests", "..\NUnitTests\NUnitTests.csproj", "{75E86381-490D-4E29-9DB8-2A70DACCABFD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuizAPI", "..\QuizAPI\QuizAPI.csproj", "{DBA38E5C-2210-4770-B556-D8479F76821A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{75E86381-490D-4E29-9DB8-2A70DACCABFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{75E86381-490D-4E29-9DB8-2A70DACCABFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{75E86381-490D-4E29-9DB8-2A70DACCABFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBA38E5C-2210-4770-B556-D8479F76821A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBA38E5C-2210-4770-B556-D8479F76821A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBA38E5C-2210-4770-B556-D8479F76821A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBA38E5C-2210-4770-B556-D8479F76821A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
