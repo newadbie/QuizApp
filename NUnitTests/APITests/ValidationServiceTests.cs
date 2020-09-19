@@ -26,7 +26,7 @@ namespace NUnitTests.APITests
             testQuestion.Answers = new List<Answer>();
             testQuestion.Title = "Correct";
 
-            Assert.False(_questionValidator.Validate(testQuestion));
+            Assert.IsFalse(_questionValidator.Validate(testQuestion));
         }
 
         [Test]
@@ -38,7 +38,22 @@ namespace NUnitTests.APITests
             testQuestion.Title = "Correct";
             testQuestion.Answers.Add(new Answer() {Title = "Correct title"});
 
-            Assert.False(_questionValidator.Validate(testQuestion));
+            Assert.IsFalse(_questionValidator.Validate(testQuestion));
+        }
+
+        [TestCase("My name is a Adrian")]
+        [TestCase("My name is A Adrian")]
+        [TestCase("Random d")]
+        [TestCase("Random D")]
+        [TestCase("It is illegal Word")]
+        [TestCase("It is illegal word")]
+        [Test]
+        public void TextValidate_ForbiddenWord_ShouldReturn_False(string value)
+        {
+            List<string> forbiddenWords = new List<string>() {"a", "b", "c", "d", "Word", "ill"};
+            TextValidator textValidator = new TextValidator(1,50, forbiddenWords);
+
+            Assert.IsFalse(textValidator.Validate(value));
         }
     }
 
