@@ -21,7 +21,7 @@ namespace QuizAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<QuizContext>(opt => opt.UseInMemoryDatabase("Quiz"));
+            services.AddDbContext<QuizContext>(opt => opt.UseSqlServer(@"Server=.\SQLEXPRESS;Database=Application2DB;Trusted_Connection=True;"));
             services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
         }
 
