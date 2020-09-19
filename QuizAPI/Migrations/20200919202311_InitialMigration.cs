@@ -2,7 +2,7 @@
 
 namespace QuizAPI.Migrations
 {
-    public partial class InitialMigrationn : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

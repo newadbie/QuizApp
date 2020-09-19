@@ -9,8 +9,8 @@ using QuizAPI.Models;
 namespace QuizAPI.Migrations
 {
     [DbContext(typeof(QuizContext))]
-    [Migration("20200919110357_InitialMigrationn")]
-    partial class InitialMigrationn
+    [Migration("20200919202311_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

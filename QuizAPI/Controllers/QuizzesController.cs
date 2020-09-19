@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using QuizAPI.Models;
+using QuizAPI.Validators;
 
 namespace QuizAPI.Controllers
 {
@@ -82,7 +83,28 @@ namespace QuizAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<Quiz>> PostQuiz(Quiz quiz)
         {
+             if (quiz == null )
+            {
+                return BadRequest();
+            }
+
+            foreach (var question in quiz.Questions)
+            {
+                var questionValidator = new QuestionValidator(_context);
+
+                if (!questionValidator.Validate(question))
+                {
+                    foreach (var error in questionValidator.ValidationErrors)
+                    {
+                        Console.WriteLine(error);
+                    }
+
+                    return BadRequest();
+                }
+            }
+
             _context.Quizzes.Add(quiz);
+
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetQuiz", new { id = quiz.Id }, quiz);
