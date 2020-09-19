@@ -5,3 +5,4 @@
 /NUnitTests/obj/*
 /QuizAPI/bin/*
 /QuizAPI/obj/*
+/QuizAPI/appsettings.json
