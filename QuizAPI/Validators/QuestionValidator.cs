@@ -1,20 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using QuizAPI.Models;
 
 namespace QuizAPI.Validators
 {
     public class QuestionValidator : IValidator<Question>
     {
-        private readonly QuizContext _context;
-
-        public QuestionValidator(QuizContext quizContext)
-        {
-            _context = quizContext;
-        }
-
         public IEnumerable<string> ValidationErrors { get; private set; }
         public bool Validate(Question question)
         {
