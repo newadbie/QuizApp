@@ -6,20 +6,31 @@ using QuizAPI.Models;
 
 namespace QuizAPI.Validators
 {
-    public class QuizValidator : IValidator<Quiz>
+    public class QuizValidator : ValidatorWithOptions<Quiz>
     {
-        public IEnumerable<string> ValidationErrors { get; } // Todo create as dictionary saved in the database
+        public QuizValidator(List<Option> options) : base(options) {}
 
-        public bool Validate(Quiz quiz)
+        public override List<string> ValidationErrors { get; protected set; }
+
+        public override bool Validate(Quiz quiz)
         {
+            if (Options == null || Options.Count == 0)
+            {
+                throw new Exception("You forget about options!");
+            }
+
+            int minTitleLength = Options.Where(x => x.Name == "MinQuizTitleLength")
+                .Select(x => x.IntValue).FirstOrDefault();
+            int maxTitleLength = Options.Where(x => x.Name == "MaxQuizTitleLength")
+                .Select(x => x.IntValue).FirstOrDefault();
+
             List<string> validationErrors = new List<string>();
-            var quizTitleValidator = TextValidator.Create(1, 10);
+            var quizTitleValidator = TextValidator.Create(minTitleLength, maxTitleLength);
 
             if (!quizTitleValidator.Validate(quiz.Title))
             {
                 validationErrors.AddRange(quizTitleValidator.ValidationErrors);
             }
-
 
             return true;
         }

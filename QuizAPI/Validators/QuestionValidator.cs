@@ -1,47 +1,74 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using QuizAPI.Models;
 
 namespace QuizAPI.Validators
 {
-    public class QuestionValidator : IValidator<Question>
+    public class QuestionValidator : ValidatorWithOptions<Question>
     {
-        private readonly TextValidator _textValidator;
-        public IEnumerable<string> ValidationErrors { get; private set; }
+        private readonly TextValidator _questionTitleValidator;
+        public override List<string> ValidationErrors { get; protected set; } = new List<string>();
 
-        public QuestionValidator(int minTitleLength, int maxTitleLength)
+        public QuestionValidator(List<Option> options) : base(options)
         {
-            _textValidator = TextValidator.Create(minTitleLength, maxTitleLength);
+            try
+            {
+                int minQuestionTitleLength = options
+                    .Where(x => x.Name == "MinQuestionTitleLength")
+                    .Select(x => x.IntValue)
+                    .First();
+
+                int maxQuestionTitleLength = options
+                    .Where(x => x.Name == "MaxQuestionTitleLength")
+                    .Select(x => x.IntValue)
+                    .First();
+
+                _questionTitleValidator = TextValidator.Create(minQuestionTitleLength, maxQuestionTitleLength);
+            }
+            catch (InvalidOperationException ex)
+            {
+                throw new Exception("Used options doesn't exist");
+            }
+
         }
 
-        public bool Validate(Question question)
+        public override bool Validate(Question question)
         {
-            List<string> validationErrors = new List<string>();
-
-            if (question.Answers == null || question.Answers.Count == 0)
+            if (!_questionTitleValidator.Validate(question.Title))
             {
-                validationErrors.Add("No answers created!");
+                ValidationErrors.AddRange(_questionTitleValidator.ValidationErrors);
+            }
+
+            ValidateAnswers(question.Answers);
+
+            return !ValidationErrors.Any();
+        }
+
+        private bool ValidateAnswers(List<Answer> answers)
+        {
+            var answersNumber = Options.Where(o => o.Name == "NumberOfAnswers")
+                .Select(v => v.IntValue).FirstOrDefault();
+
+            if (answers == null || answers.Count == 0)
+            {
+                ValidationErrors.Add("No answers created!");
                 return false;
             }
 
-            if (question.Answers.Count != 4) // TODO remove magic number
+            if (answers.Count != answersNumber)
             {
-                validationErrors.Add("Incorrect number of answers");
+                ValidationErrors.Add("Incorrect number of answers");
+                return false;
             }
 
-            if (question.Answers.Count(answer => answer.IsCorrect) != 1)
+            if (answers.Count(answer => answer.IsCorrect) != 1)
             {
-                validationErrors.Add("Incorrect selected answers number!");
+                ValidationErrors.Add("Incorrect selected answers number!");
+                return false;
             }
 
-            if (!_textValidator.Validate(question.Title))
-            {
-                validationErrors.AddRange(_textValidator.ValidationErrors);
-            }
-
-            ValidationErrors = validationErrors;
-
-            return !ValidationErrors.Any();
+            return true;
         }
 
     }

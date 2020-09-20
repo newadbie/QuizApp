@@ -7,6 +7,21 @@ namespace QuizAPI.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Options",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IntValue = table.Column<int>(type: "int", nullable: false),
+                    StringValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Options", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Quizzes",
                 columns: table => new
                 {
@@ -75,6 +90,9 @@ namespace QuizAPI.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Answers");
+
+            migrationBuilder.DropTable(
+                name: "Options");
 
             migrationBuilder.DropTable(
                 name: "Questions");

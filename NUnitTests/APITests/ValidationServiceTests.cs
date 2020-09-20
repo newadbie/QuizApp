@@ -9,13 +9,14 @@ namespace NUnitTests.APITests
     [TestFixture]
     public class ValidationServiceTests
     {
-        private QuestionValidator _questionValidator;
-
-        [SetUp]
-        public void SetUp()
+        private List<Option> _options = new List<Option>
         {
-            _questionValidator = new QuestionValidator(1, 10);
-        }
+            new Option() {Name = "NumberOfAnswers", IntValue = 4},
+            new Option() {Name = "MinQuizTitleLength", IntValue = 1},
+            new Option() {Name = "MaxQuizTitleLength", IntValue = 40},
+            new Option() {Name = "MinQuestionTitleLength", IntValue = 5},
+            new Option() {Name = "MaxQuestionTitleLength", IntValue = 10},
+        };
 
         [TestCase("My name is a Adrian")]
         [TestCase("My name is A Adrian")]
@@ -65,14 +66,19 @@ namespace NUnitTests.APITests
         }
 
         [TestCase(1,1)]
-        [TestCase(-10,100)]
+        [TestCase(10,100)]
         [TestCase(0,100)]
         [TestCase(100,100)]
         [TestCase(100,60)]
         [Test]
         public void QuestionValidatorConstructor_Incorrect_MaxMinLength_ShouldThrowException(int minValue, int maxValue)
         {
-            Assert.Throws<Exception>(() => new QuestionValidator(minValue, maxValue));
+            List<Option> abcd = new List<Option>()
+            {
+                new Option() {Name = "minQuestionTitleLength", IntValue = minValue},
+                new Option() {Name = "maxQuestionTitleLength", IntValue = maxValue},
+            };
+            Assert.Throws<Exception>(() => new QuestionValidator(abcd));
         }
 
         [TestCase("")]
@@ -81,6 +87,7 @@ namespace NUnitTests.APITests
         public void QuestionValidator_TitleTooShort_ShouldReturnFalse(string value)
         {
             var question = new Question {Title = value};
+            var questionValidator = new QuestionValidator(_options);
 
             question.Answers = new List<Answer>()
             {
@@ -90,7 +97,7 @@ namespace NUnitTests.APITests
                 new Answer() {Id = 4, IsCorrect = false, Question = question, QuestionId = question.Id, Title = "dsadsa"}
             };
 
-            Assert.IsFalse(_questionValidator.Validate(question));
+            Assert.IsFalse(questionValidator.Validate(question));
         }
 
         [TestCase(1,1)]
@@ -108,30 +115,33 @@ namespace NUnitTests.APITests
         [Test]
         public void QuestionValidate_OneAnswer_ShouldReturnFalse()
         {
+            var questionValidator = new QuestionValidator(_options);
             var question = new Question()
             {
                Answers = new List<Answer> {new Answer() {IsCorrect = true, Title = "eee"}},
                Title = "Correct",
             };
 
-            Assert.IsFalse(_questionValidator.Validate(question));
+            Assert.IsFalse(questionValidator.Validate(question));
         }
 
         [Test]
         public void QuestionValidate_NoAnswers_ShouldReturnFalse()
         {
+            var questionValidator = new QuestionValidator(_options);
             var question = new Question()
             {
                 Answers = new List<Answer>(),
                 Title = "Correct",
             };
 
-            Assert.IsFalse(_questionValidator.Validate(question));
+            Assert.IsFalse(questionValidator.Validate(question));
         }
 
         [Test]
         public void QuestionValidate_TooMuchCorrectAnswers_ShouldReturnFalse()
         {
+            var questionValidator = new QuestionValidator(_options);
             var question = new Question()
             {
                 Answers = new List<Answer>()
@@ -144,12 +154,13 @@ namespace NUnitTests.APITests
                 Title = "Correct",
             };
 
-            Assert.IsFalse(_questionValidator.Validate(question));
+            Assert.IsFalse(questionValidator.Validate(question));
         }
 
         [Test]
         public void QuestionValidate_EmptyTitle_ShouldReturnFalse()
         {
+            var questionValidator = new QuestionValidator(_options);
             var question = new Question()
             {
                 Answers = new List<Answer>()
@@ -162,7 +173,7 @@ namespace NUnitTests.APITests
                 Title = null
             };
 
-            Assert.IsFalse(_questionValidator.Validate(question));
+            Assert.IsFalse(questionValidator.Validate(question));
         }
     }
 

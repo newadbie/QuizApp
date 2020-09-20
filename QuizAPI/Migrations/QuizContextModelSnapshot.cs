@@ -41,6 +41,27 @@ namespace QuizAPI.Migrations
                     b.ToTable("Answers");
                 });
 
+            modelBuilder.Entity("QuizAPI.Models.Option", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<int>("IntValue")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StringValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Options");
+                });
+
             modelBuilder.Entity("QuizAPI.Models.Question", b =>
                 {
                     b.Property<int>("Id")

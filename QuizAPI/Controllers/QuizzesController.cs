@@ -90,7 +90,7 @@ namespace QuizAPI.Controllers
 
             foreach (var question in quiz.Questions)
             {
-                var questionValidator = new QuestionValidator(1,1000);
+                var questionValidator = new QuestionValidator(new List<Option>());
 
                 if (!questionValidator.Validate(question))
                 {

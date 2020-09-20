@@ -5,6 +5,9 @@
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=2ab511a7_002D5f19_002D465c_002Da8d8_002D6a9791bda81c/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from &amp;lt;NUnitTests&amp;gt;" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;Project Location="E:\newadbie\QuizApp\NUnitTests" Presentation="&amp;lt;NUnitTests&amp;gt;" /&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=f7bc326e_002D4bf9_002D4bf4_002D9672_002D8d03f816478d/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from &amp;lt;NUnitTests&amp;gt; #3" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;Project Location="E:\newadbie\QuizApp\NUnitTests" Presentation="&amp;lt;NUnitTests&amp;gt;" /&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
 	
 	<s:Boolean x:Key="/Default/RunConfigs/Config/=0A4973633840384BA1AC89C841EE6C07/@KeyIndexDefined">True</s:Boolean>
 	<s:String x:Key="/Default/RunConfigs/Config/=0A4973633840384BA1AC89C841EE6C07/Type/@EntryValue">project</s:String>

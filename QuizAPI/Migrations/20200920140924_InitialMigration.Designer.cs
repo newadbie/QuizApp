@@ -9,7 +9,7 @@ using QuizAPI.Models;
 namespace QuizAPI.Migrations
 {
     [DbContext(typeof(QuizContext))]
-    [Migration("20200919202311_InitialMigration")]
+    [Migration("20200920140924_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -41,6 +41,27 @@ namespace QuizAPI.Migrations
                     b.HasIndex("QuestionId");
 
                     b.ToTable("Answers");
+                });
+
+            modelBuilder.Entity("QuizAPI.Models.Option", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<int>("IntValue")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StringValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Options");
                 });
 
             modelBuilder.Entity("QuizAPI.Models.Question", b =>

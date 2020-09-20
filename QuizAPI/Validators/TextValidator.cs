@@ -8,7 +8,7 @@ namespace QuizAPI.Validators
 {
     public class TextValidator : IValidator<string>
     {
-        public IEnumerable<string> ValidationErrors { get; private set; }
+        public List<string> ValidationErrors { get; private set; }
         private readonly int _minTextLength;
         private readonly int _maxTextLength;
         private readonly List<string> _forbiddenWords;
