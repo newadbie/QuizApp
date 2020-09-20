@@ -83,28 +83,28 @@ namespace QuizAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<Quiz>> PostQuiz(Quiz quiz)
         {
-             if (quiz == null )
-            {
-                return BadRequest();
-            }
+            try
+            { 
+                var  options = await _context.Options.ToListAsync();
+                QuizValidator quizValidator = new QuizValidator(options);
 
-            foreach (var question in quiz.Questions)
-            {
-                var questionValidator = new QuestionValidator(new List<Option>());
-
-                if (!questionValidator.Validate(question))
+                if (!quizValidator.Validate(quiz))
                 {
-                    foreach (var error in questionValidator.ValidationErrors)
+                    foreach (var error in quizValidator.ValidationErrors)
                     {
                         Console.WriteLine(error);
                     }
-
                     return BadRequest();
                 }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return BadRequest();
             }
 
             _context.Quizzes.Add(quiz);
-
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetQuiz", new { id = quiz.Id }, quiz);

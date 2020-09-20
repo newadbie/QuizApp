@@ -59,13 +59,11 @@ namespace QuizAPI.Validators
             if (answers.Count != answersNumber)
             {
                 ValidationErrors.Add("Incorrect number of answers");
-                return false;
             }
 
             if (answers.Count(answer => answer.IsCorrect) != 1)
             {
                 ValidationErrors.Add("Incorrect selected answers number!");
-                return false;
             }
 
             return true;
