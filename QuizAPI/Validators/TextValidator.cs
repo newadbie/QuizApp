@@ -13,20 +13,35 @@ namespace QuizAPI.Validators
         private readonly int _maxTextLength;
         private readonly List<string> _forbiddenWords;
 
-        public TextValidator(int minTextLength, int maxTextLength, List<string> forbiddenWords = null)
+        protected TextValidator(int minTextLength, int maxTextLength, List<string> forbiddenWords = null)
         {
             _minTextLength = minTextLength;
             _maxTextLength = maxTextLength;
             _forbiddenWords = forbiddenWords;
         }
 
+        public static TextValidator Create(int minTextLength, int maxTextLength, List<string> forbiddenWords = null)
+        {
+
+            if (minTextLength <= 0)
+            {
+                throw new Exception("Incorrect minimal text length");
+            }
+
+            if (minTextLength >= maxTextLength)
+            {
+                throw new Exception("Minimal text length cannot be greater or equal than maximal text length");
+            }
+            return new TextValidator(minTextLength, maxTextLength, forbiddenWords);
+        }
+
         public bool Validate(string value)
         {
             List<string> errors = new List<string>();
 
-            if (string.IsNullOrWhiteSpace(value))
+            if (value == null || string.IsNullOrWhiteSpace(value) || string.IsNullOrEmpty(value) )
             {
-                errors.Add("Value cannot be empty");
+                errors.Add("Text cannot be empty");
             }
 
             if (value.Length < _minTextLength)
