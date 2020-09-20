@@ -34,7 +34,7 @@ namespace QuizAPI.Validators
                 validationErrors.Add("Incorrect selected answers number!");
             }
 
-            if (!_textValidator.Validate(question.Title ?? ""))
+            if (!_textValidator.Validate(question.Title))
             {
                 validationErrors.AddRange(_textValidator.ValidationErrors);
             }

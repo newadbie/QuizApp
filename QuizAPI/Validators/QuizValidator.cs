@@ -8,10 +8,20 @@ namespace QuizAPI.Validators
 {
     public class QuizValidator : IValidator<Quiz>
     {
-        public IEnumerable<string> ValidationErrors { get; }
-        public bool Validate(Quiz value)
+        public IEnumerable<string> ValidationErrors { get; } // Todo create as dictionary saved in the database
+
+        public bool Validate(Quiz quiz)
         {
-            throw new NotImplementedException();
+            List<string> validationErrors = new List<string>();
+            var quizTitleValidator = TextValidator.Create(1, 10);
+
+            if (!quizTitleValidator.Validate(quiz.Title))
+            {
+                validationErrors.AddRange(quizTitleValidator.ValidationErrors);
+            }
+
+
+            return true;
         }
     }
 }

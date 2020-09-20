@@ -32,16 +32,19 @@ namespace QuizAPI.Validators
             {
                 throw new Exception("Minimal text length cannot be greater or equal than maximal text length");
             }
+            
             return new TextValidator(minTextLength, maxTextLength, forbiddenWords);
         }
 
-        public bool Validate(string value)
+        public bool Validate(string? value)
         {
             List<string> errors = new List<string>();
 
-            if (value == null || string.IsNullOrWhiteSpace(value) || string.IsNullOrEmpty(value) )
+            if (string.IsNullOrWhiteSpace(value) || string.IsNullOrEmpty(value) )
             {
                 errors.Add("Text cannot be empty");
+                ValidationErrors = errors;
+                return false;
             }
 
             if (value.Length < _minTextLength)
