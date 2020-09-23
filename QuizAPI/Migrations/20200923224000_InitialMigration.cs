@@ -61,7 +61,6 @@ namespace QuizAPI.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsCorrect = table.Column<bool>(type: "bit", nullable: false),
                     QuestionId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -75,10 +74,46 @@ namespace QuizAPI.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "CorrectAnswers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AnswerId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CorrectAnswers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CorrectAnswers_Answers_AnswerId",
+                        column: x => x.AnswerId,
+                        principalTable: "Answers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Options",
+                columns: new[] { "Id", "IntValue", "Name", "StringValue" },
+                values: new object[,]
+                {
+                    { 1, 1, "MinQuizTitleLength", null },
+                    { 2, 40, "MaxQuizTitleLength", null },
+                    { 3, 1, "MinQuestionTitleLength", null },
+                    { 4, 40, "MaxQuestionTitleLength", null },
+                    { 5, 4, "NumberOfAnswers", null }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Answers_QuestionId",
                 table: "Answers",
                 column: "QuestionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CorrectAnswers_AnswerId",
+                table: "CorrectAnswers",
+                column: "AnswerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Questions_QuizId",
@@ -89,10 +124,13 @@ namespace QuizAPI.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Answers");
+                name: "CorrectAnswers");
 
             migrationBuilder.DropTable(
                 name: "Options");
+
+            migrationBuilder.DropTable(
+                name: "Answers");
 
             migrationBuilder.DropTable(
                 name: "Questions");

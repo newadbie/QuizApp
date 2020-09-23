@@ -91,10 +91,10 @@ namespace NUnitTests.APITests
 
             question.Answers = new List<Answer>()
             {
-                new Answer() {Id = 1, IsCorrect = true, Question = question, QuestionId = question.Id, Title = "sd"},
-                new Answer() {Id = 2, IsCorrect = false, Question = question, QuestionId = question.Id, Title = "dsa"},
-                new Answer() {Id = 3, IsCorrect = false, Question = question, QuestionId = question.Id, Title = "dsaa"},
-                new Answer() {Id = 4, IsCorrect = false, Question = question, QuestionId = question.Id, Title = "dsadsa"}
+                new Answer() {Id = 1, Question = question, QuestionId = question.Id, Title = "sd"},
+                new Answer() {Id = 2, Question = question, QuestionId = question.Id, Title = "dsa"},
+                new Answer() {Id = 3, Question = question, QuestionId = question.Id, Title = "dsaa"},
+                new Answer() {Id = 4, Question = question, QuestionId = question.Id, Title = "dsadsa"}
             };
 
             Assert.IsFalse(questionValidator.Validate(question));
@@ -118,7 +118,7 @@ namespace NUnitTests.APITests
             var questionValidator = new QuestionValidator(_options);
             var question = new Question()
             {
-               Answers = new List<Answer> {new Answer() {IsCorrect = true, Title = "eee"}},
+               Answers = new List<Answer> {new Answer() {Title = "eee"}},
                Title = "Correct",
             };
 
@@ -146,10 +146,10 @@ namespace NUnitTests.APITests
             {
                 Answers = new List<Answer>()
                 {
-                    new Answer() {Id = 1, IsCorrect = false, Title = "dsada"},
-                    new Answer() {Id = 2, IsCorrect = true, Title = "dsada"},
-                    new Answer() {Id = 3, IsCorrect = true, Title = "dsada"},
-                    new Answer() {Id = 4, IsCorrect = false, Title = "dsada"},
+                    new Answer() {Id = 1, Title = "dsada"},
+                    new Answer() {Id = 2, Title = "dsada"},
+                    new Answer() {Id = 3,Title = "dsada"},
+                    new Answer() {Id = 4, Title = "dsada"},
                 },
                 Title = "Correct",
             };
@@ -165,16 +165,11 @@ namespace NUnitTests.APITests
             {
                 Answers = new List<Answer>()
                 {
-                    new Answer() {IsCorrect = false},
-                    new Answer() {IsCorrect = false},
-                    new Answer() {IsCorrect = false},
-                    new Answer() {IsCorrect = true}
                 },
                 Title = null
             };
 
-            Assert.IsFalse(questionValidator.Validate(question));
+            Assert.IsFalse(questionValidator.Validate(question)); // TODO More tests
         }
     }
-
 }

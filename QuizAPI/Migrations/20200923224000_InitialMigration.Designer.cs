@@ -9,7 +9,7 @@ using QuizAPI.Models;
 namespace QuizAPI.Migrations
 {
     [DbContext(typeof(QuizContext))]
-    [Migration("20200920163029_InitialMigration")]
+    [Migration("20200923224000_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,9 +27,6 @@ namespace QuizAPI.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<bool>("IsCorrect")
-                        .HasColumnType("bit");
-
                     b.Property<int>("QuestionId")
                         .HasColumnType("int");
 
@@ -41,6 +38,23 @@ namespace QuizAPI.Migrations
                     b.HasIndex("QuestionId");
 
                     b.ToTable("Answers");
+                });
+
+            modelBuilder.Entity("QuizAPI.Models.CorrectAnswer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<int>("AnswerId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AnswerId");
+
+                    b.ToTable("CorrectAnswers");
                 });
 
             modelBuilder.Entity("QuizAPI.Models.Option", b =>
@@ -62,6 +76,38 @@ namespace QuizAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Options");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            IntValue = 1,
+                            Name = "MinQuizTitleLength"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            IntValue = 40,
+                            Name = "MaxQuizTitleLength"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            IntValue = 1,
+                            Name = "MinQuestionTitleLength"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            IntValue = 40,
+                            Name = "MaxQuestionTitleLength"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            IntValue = 4,
+                            Name = "NumberOfAnswers"
+                        });
                 });
 
             modelBuilder.Entity("QuizAPI.Models.Question", b =>
@@ -108,6 +154,17 @@ namespace QuizAPI.Migrations
                         .IsRequired();
 
                     b.Navigation("Question");
+                });
+
+            modelBuilder.Entity("QuizAPI.Models.CorrectAnswer", b =>
+                {
+                    b.HasOne("QuizAPI.Models.Answer", "Answer")
+                        .WithMany()
+                        .HasForeignKey("AnswerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Answer");
                 });
 
             modelBuilder.Entity("QuizAPI.Models.Question", b =>

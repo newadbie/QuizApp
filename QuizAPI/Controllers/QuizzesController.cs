@@ -22,7 +22,7 @@ namespace QuizAPI.Controllers
         }
 
         // GET: api/Quizzes
-        [Authorize]
+        //[Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Quiz>>> GetQuizzes()
         {
@@ -81,26 +81,18 @@ namespace QuizAPI.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Quiz>> PostQuiz(Quiz quiz)
+        public async Task<ActionResult<Quiz>> PostQuiz(PostQuiz postQuiz)
         {
-            try
-            { 
-                var  options = await _context.Options.ToListAsync();
-                QuizValidator quizValidator = new QuizValidator(options);
-
-                if (!quizValidator.Validate(quiz))
-                {
-                    foreach (var error in quizValidator.ValidationErrors)
-                    {
-                        Console.WriteLine(error);
-                    }
-                    return BadRequest();
-                }
-
-            }
-            catch (Exception ex)
+            if (!postQuiz.IsValid())
             {
-                Console.WriteLine(ex.Message);
+                return Content("No bracie");
+            }
+
+            var quiz = postQuiz.Quiz;
+
+            if (!ValidateQuiz(quiz)
+                || !PutCorrectAnswers(quiz.Questions, postQuiz.CorrectAnswersInQuestion))
+            {
                 return BadRequest();
             }
 
@@ -129,6 +121,54 @@ namespace QuizAPI.Controllers
         private bool QuizExists(long id)
         {
             return _context.Quizzes.Any(e => e.Id == id);
+        }
+
+        private bool ValidateQuiz(Quiz quiz)
+        {
+            try
+            {
+                var options = _context.Options.ToList();
+                QuizValidator quizValidator = new QuizValidator(options);
+
+                if (!quizValidator.Validate(quiz))
+                {
+                    foreach (var error in quizValidator.ValidationErrors)
+                    {
+                        Console.WriteLine(error);
+                    }
+                    return false;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool PutCorrectAnswers(List<Question> questions, Dictionary<int,int> correctAnswerInQuestion)
+        {
+            foreach(var item in correctAnswerInQuestion)
+            {
+                if (questions[item.Key] != null 
+                    && questions[item.Key].Answers[item.Value] != null)
+                {
+                    var correctAnswer = new CorrectAnswer()
+                    {
+                        Answer = questions[item.Key].Answers[item.Value] 
+                    };
+                    _context.CorrectAnswers.Add(correctAnswer);
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }
