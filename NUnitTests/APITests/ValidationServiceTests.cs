@@ -139,25 +139,6 @@ namespace NUnitTests.APITests
         }
 
         [Test]
-        public void QuestionValidate_TooMuchCorrectAnswers_ShouldReturnFalse()
-        {
-            var questionValidator = new QuestionValidator(_options);
-            var question = new Question()
-            {
-                Answers = new List<Answer>()
-                {
-                    new Answer() {Id = 1, Title = "dsada"},
-                    new Answer() {Id = 2, Title = "dsada"},
-                    new Answer() {Id = 3,Title = "dsada"},
-                    new Answer() {Id = 4, Title = "dsada"},
-                },
-                Title = "Correct",
-            };
-
-            Assert.IsFalse(questionValidator.Validate(question));
-        }
-
-        [Test]
         public void QuestionValidate_EmptyTitle_ShouldReturnFalse()
         {
             var questionValidator = new QuestionValidator(_options);

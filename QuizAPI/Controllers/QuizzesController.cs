@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using QuizAPI.Models;
+using QuizAPI.Services;
 using QuizAPI.Validators;
 
 namespace QuizAPI.Controllers
@@ -83,21 +84,14 @@ namespace QuizAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<Quiz>> PostQuiz(PostQuiz postQuiz)
         {
-            if (!postQuiz.IsValid())
-            {
-                return Content("No bracie");
-            }
+            var postQuizService = new PostQuizService(_context, postQuiz);
 
-            var quiz = postQuiz.Quiz;
-
-            if (!ValidateQuiz(quiz)
-                || !PutCorrectAnswers(quiz.Questions, postQuiz.CorrectAnswersInQuestion))
+            if (!await postQuizService.PostQuiz())
             {
                 return BadRequest();
             }
 
-            _context.Quizzes.Add(quiz);
-            await _context.SaveChangesAsync();
+            var quiz = postQuiz.Quiz;
 
             return CreatedAtAction("GetQuiz", new { id = quiz.Id }, quiz);
         }
@@ -121,54 +115,6 @@ namespace QuizAPI.Controllers
         private bool QuizExists(long id)
         {
             return _context.Quizzes.Any(e => e.Id == id);
-        }
-
-        private bool ValidateQuiz(Quiz quiz)
-        {
-            try
-            {
-                var options = _context.Options.ToList();
-                QuizValidator quizValidator = new QuizValidator(options);
-
-                if (!quizValidator.Validate(quiz))
-                {
-                    foreach (var error in quizValidator.ValidationErrors)
-                    {
-                        Console.WriteLine(error);
-                    }
-                    return false;
-                }
-
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return false;
-            }
-
-            return true;
-        }
-
-        private bool PutCorrectAnswers(List<Question> questions, Dictionary<int,int> correctAnswerInQuestion)
-        {
-            foreach(var item in correctAnswerInQuestion)
-            {
-                if (questions[item.Key] != null 
-                    && questions[item.Key].Answers[item.Value] != null)
-                {
-                    var correctAnswer = new CorrectAnswer()
-                    {
-                        Answer = questions[item.Key].Answers[item.Value] 
-                    };
-                    _context.CorrectAnswers.Add(correctAnswer);
-                }
-                else
-                {
-                    return false;
-                }
-            }
-
-            return true;
         }
     }
 }
