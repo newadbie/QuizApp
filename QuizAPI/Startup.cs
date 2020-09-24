@@ -29,7 +29,7 @@ namespace QuizAPI
             {
                 options.AddDefaultPolicy(builder =>
                 {
-                    builder.WithOrigins("http://192.168.0.150:8080")
+                    builder.WithOrigins("http://localhost:8080")
                         .AllowAnyHeader()
                         .AllowAnyMethod();
                 });
