@@ -7,7 +7,7 @@ using QuizAPI.Validators;
 namespace NUnitTests.APITests
 {
     [TestFixture]
-    public class ValidationServiceTests
+    public class ValidatorsTests
     {
         private List<Option> _options = new List<Option>
         {

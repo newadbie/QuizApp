@@ -1,10 +1,6 @@
 <template>
     <div>
-        <span v-for="quiz in Quizzes" :key="quiz.Id">
-            {{quiz.id}}
-            {{quiz.title}}
-            <br />
-        </span>      
+        <h2>{{ currentQuiz.title }}</h2>
     </div>
 </template>
 
@@ -14,13 +10,20 @@ const axios = require('axios').default;
 export default {
     data() {
         return {
-            Quizzes: null
+            currentQuiz: null
         }
     },
     mounted() {
-        axios.get("https://localhost:5001/api/Quizzes").then(response => {
-            this.Quizzes = response.data;
-        });
+        var routeId = this.$route.params.id;
+        if (isNaN(routeId))
+        {
+            alert("TODO INCORRECT ID"); // todo validate
+        } 
+        else {
+            axios.get('https://localhost:5001/api/Quizzes/' + routeId).then(res => {
+                this.currentQuiz = res.data;
+            }).catch(ex => alert(ex))
+        }
     }
 }
 </script>

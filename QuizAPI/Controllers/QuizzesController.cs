@@ -27,16 +27,14 @@ namespace QuizAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Quiz>>> GetQuizzes()
         {
-            return await _context.Quizzes
-                .Include(q => q.Questions)
-                .ThenInclude(a => a.Answers).ToListAsync();
+            return await _context.Quizzes.ToListAsync();
         }
 
         // GET: api/Quizzes/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Quiz>> GetQuiz(int id)
         {
-            var quiz = await _context.Quizzes.FindAsync(id);
+            var quiz = await _context.Quizzes.Include(q => q.Questions).ThenInclude(a => a.Answers).FirstOrDefaultAsync(i => i.Id == id);
 
             if (quiz == null)
             {
