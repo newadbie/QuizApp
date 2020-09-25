@@ -34,7 +34,11 @@ namespace QuizAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Quiz>> GetQuiz(int id)
         {
-            var quiz = await _context.Quizzes.Include(q => q.Questions).ThenInclude(a => a.Answers).FirstOrDefaultAsync(i => i.Id == id);
+            var quiz = await _context.Quizzes
+                .Include(q => q.Questions)
+                .ThenInclude(a => a.Answers)
+                .AsSplitQuery()
+                .FirstOrDefaultAsync(i => i.Id == id);
 
             if (quiz == null)
             {

@@ -25,13 +25,14 @@ namespace QuizAPI.Services
 
             var quiz = _postQuizModel.Quiz;
 
+            _context.Quizzes.Add(quiz);
+
             if (!ValidateQuiz(quiz)
                 || !PutCorrectAnswers(quiz.Questions, _postQuizModel.CorrectAnswersInQuestion))
             {
                 return false;
             }
 
-            _context.Quizzes.Add(quiz);
             await _context.SaveChangesAsync();
             return true;
         }
