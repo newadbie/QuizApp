@@ -2,9 +2,15 @@
     <div class="Question">
         <h2 class="QuestionTitle">{{Question.title}}</h2>
         <div class="Answers">
-            <div class="Answer" v-for="answer in Question.answers"
+            <div class="Answer" 
+            v-for="answer in Question.answers"
              :key="answer.id">
-                <input type="radio" :name="Question.id" :value="answer.id" :id="'answer' + answer.id"/>
+                <input type="radio" 
+                :name="Question.id"
+                 :value="answer.id" 
+                 :id="'answer' + answer.id"
+                 v-model="selectedAnswer"
+                 />
                 <label :for="'answer' + answer.id"> {{answer.title}} </label>
             </div>
         </div>
@@ -58,6 +64,18 @@
 
 <script>
 export default {
-    props: [ "Question" ]
+    props: [ "Question" ],
+    data() {
+        return {
+            selectedAnswer: null,
+            lastSelectedAnswer: null,
+        }
+    },
+    watch: {
+        selectedAnswer(value) {
+            this.$store.commit('selectAnswer', {selectedAnswer: value, lastSelectedAnswer: this.lastSelectedAnswer});
+            this.lastSelectedAnswer = value;
+            }
+    }
 }
 </script>
