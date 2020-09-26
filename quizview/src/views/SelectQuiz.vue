@@ -2,7 +2,7 @@
     <div>
         <h1>Select your quiz!</h1>
             <div class="container">
-                <div class="option" v-for="quiz in Quizzes" :key="quiz.id">
+                <div class="option" v-for="quiz in state.Quizzes" :key="quiz.id">
                     <router-link :to="{ name: 'answerForQuiz', params: { id: quiz.id }}">
                         {{quiz.title}}
                     </router-link>
@@ -12,18 +12,22 @@
 </template>
 
 <script>
-const axios = require('axios').default;
-
+import { GetQuizzes } from '@/Quiz/GetQuizzes'
+import { onBeforeMount, reactive} from 'vue'
 export default {
-    data() {
-        return {
+    setup()
+    {
+        const state = reactive( {
             Quizzes: null
-        }
-    },
-    mounted() {
-        axios.get("https://localhost:5001/api/Quizzes").then(response => {
-            this.Quizzes = response.data;
-        });
+        })
+
+        onBeforeMount(() => {
+            GetQuizzes.then((data) => {
+                state.Quizzes = data;
+            });
+        })
+
+        return { state }
     }
 }
 </script>

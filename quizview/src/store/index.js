@@ -4,9 +4,6 @@ export default createStore({
   state: {
     selectedAnswers: []
   },
-  getters: {
-    selectedAnswer: state => state.selectedAnswer
-  },
   mutations: {
     clearAnswers(state) {
       state.selectedAnswers = [];
